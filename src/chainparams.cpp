@@ -276,28 +276,28 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_CSV].nTimeout = 1517788800; // Feb 5th, 2018
 
         // Deployment of DIP0001
-        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0001].bit = 1;
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0001].bit = 6;
         consensus.vDeployments[Consensus::DEPLOYMENT_DIP0001].nStartTime = 1508025600; // Oct 15th, 2017
         consensus.vDeployments[Consensus::DEPLOYMENT_DIP0001].nTimeout = 1539561600; // Oct 15th, 2018
         consensus.vDeployments[Consensus::DEPLOYMENT_DIP0001].nWindowSize = 4032;
         consensus.vDeployments[Consensus::DEPLOYMENT_DIP0001].nThreshold = 3226; // 80% of 4032
 
         // Deployment of BIP147
-        consensus.vDeployments[Consensus::DEPLOYMENT_BIP147].bit = 2;
+        consensus.vDeployments[Consensus::DEPLOYMENT_BIP147].bit = 7;
         consensus.vDeployments[Consensus::DEPLOYMENT_BIP147].nStartTime = 1524477600; // Apr 23th, 2018
         consensus.vDeployments[Consensus::DEPLOYMENT_BIP147].nTimeout = 1556013600; // Apr 23th, 2019
         consensus.vDeployments[Consensus::DEPLOYMENT_BIP147].nWindowSize = 4032;
         consensus.vDeployments[Consensus::DEPLOYMENT_BIP147].nThreshold = 3226; // 80% of 4032
 
         // Deployment of DIP0003
-        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0003].bit = 3;
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0003].bit = 8;
         consensus.vDeployments[Consensus::DEPLOYMENT_DIP0003].nStartTime = 1546300800; // Jan 1st, 2019
         consensus.vDeployments[Consensus::DEPLOYMENT_DIP0003].nTimeout = 1577836800; // Jan 1st, 2020
         consensus.vDeployments[Consensus::DEPLOYMENT_DIP0003].nWindowSize = 4032;
         consensus.vDeployments[Consensus::DEPLOYMENT_DIP0003].nThreshold = 3226; // 80% of 4032
 
         // Deployment of DIP0008
-        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0008].bit = 4;
+        consensus.vDeployments[Consensus::DEPLOYMENT_DIP0008].bit = 9;
         consensus.vDeployments[Consensus::DEPLOYMENT_DIP0008].nStartTime = 1557878400; // May 15th, 2019
         consensus.vDeployments[Consensus::DEPLOYMENT_DIP0008].nTimeout = 1589500800; // May 15th, 2020
         consensus.vDeployments[Consensus::DEPLOYMENT_DIP0008].nWindowSize = 4032;
@@ -307,7 +307,7 @@ public:
         consensus.nMinimumChainWork = uint256S("0x00"); // ~
 
         // By default assume that the signatures in ancestors of this block are valid.
-        consensus.defaultAssumeValid = uint256S("0x0000000000000009a563e41afbafa4044861f32feb871de41f4c6e401dac1dac"); // 1215000
+        consensus.defaultAssumeValid = uint256S("0x00000000001632186c7537087690ebff6d40252546f14d18093c0fd5a75ab1f8"); // 1515000
 
         std::vector<FounderRewardStructure> rewardStructures = {  {1420000, 5}// 5% founder/dev fee for blocks between startFounder block and 500k block
 
