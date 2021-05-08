@@ -1,4 +1,5 @@
-// Copyright (c) 2019-2020 The Pigeon Core developers
+// Copyright (c) 2019-2020 The Dash Core developers
+// Copyright (c) 2020 The Pigeoncoin developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -1128,7 +1129,7 @@ void CInstantSendManager::NotifyChainLock(const CBlockIndex* pindexChainLock)
 void CInstantSendManager::UpdatedBlockTip(const CBlockIndex* pindexNew)
 {
     // TODO remove this after DIP8 has activated
-    bool fDIP0008Active = VersionBitsState(pindexNew->pprev, Params().GetConsensus(), Consensus::DEPLOYMENT_DIP0008, versionbitscache) == THRESHOLD_ACTIVE;
+    bool fDIP0008Active = Params().GetConsensus().DIP0008Enabled;
 
     if (sporkManager.IsSporkActive(SPORK_19_CHAINLOCKS_ENABLED) && fDIP0008Active) {
         // Nothing to do here. We should keep all islocks and let chainlocks handle them.

@@ -1,9 +1,10 @@
-// Copyright (c) 2019-2020 The Pigeon Core developers
+// Copyright (c) 2019-2020 The Dash Core developers
+// Copyright (c) 2020 The Pigeoncoin developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef PIGEON_UNORDERED_LRU_CACHE_H
-#define PIGEON_UNORDERED_LRU_CACHE_H
+#ifndef PIGEONCOIN_UNORDERED_LRU_CACHE_H
+#define PIGEONCOIN_UNORDERED_LRU_CACHE_H
 
 #include <unordered_map>
 
@@ -107,4 +108,4 @@ private:
     }
 };
 
-#endif // PIGEON_UNORDERED_LRU_CACHE_H
+#endif // PIGEONCOIN_UNORDERED_LRU_CACHE_H

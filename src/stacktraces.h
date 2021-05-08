@@ -1,9 +1,10 @@
-// Copyright (c) 2014-2019 The Pigeon Core developers
+// Copyright (c) 2014-2019 The Dash Core developers
+// Copyright (c) 2020 The Pigeoncoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef PIGEON_STACKTRACES_H
-#define PIGEON_STACKTRACES_H
+#ifndef PIGEONCOIN_STACKTRACES_H
+#define PIGEONCOIN_STACKTRACES_H
 
 #include <string>
 #include <sstream>
@@ -39,4 +40,4 @@ inline std::string GetExceptionWhat(const T& e)
 void RegisterPrettyTerminateHander();
 void RegisterPrettySignalHandlers();
 
-#endif//PIGEON_STACKTRACES_H
+#endif//PIGEONCOIN_STACKTRACES_H

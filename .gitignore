@@ -6,14 +6,14 @@ reset-files.bash
 *.tar.gz
 
 *.exe
-src/pigeon
-src/pigeond
-src/pigeon-cli
-src/pigeon-tx
-src/test/test_pigeon
-src/test/test_pigeon_fuzzy
-src/qt/test/test_pigeon-qt
-src/bench/bench_pigeon
+src/pigeoncoin
+src/pigeoncoind
+src/pigeoncoin-cli
+src/pigeoncoin-tx
+src/test/test_pigeoncoin
+src/test/test_pigeoncoin_fuzzy
+src/qt/test/test_pigeoncoin-qt
+src/bench/bench_pigeoncoin
 
 # autoreconf
 Makefile.in
@@ -36,8 +36,8 @@ config.log
 config.status
 configure
 libtool
-src/config/pigeon-config.h
-src/config/pigeon-config.h.in
+src/config/pigeoncoin-config.h
+src/config/pigeoncoin-config.h.in
 src/config/stamp-h1
 share/setup.nsi
 share/qt/Info.plist
@@ -82,13 +82,13 @@ libconftest.dylib*
 # Compilation and Qt preprocessor part
 *.qm
 Makefile
-pigeon-qt
-Pigeon-Qt.app
+pigeoncoin-qt
+Pigeoncoin-Qt.app
 !/depends/Makefile
 
 # Unit-tests
 Makefile.test
-pigeon-qt_test
+pigeoncoin-qt_test
 
 # Resources cpp
 qrc_*.cpp
@@ -101,7 +101,7 @@ build
 *.gcno
 *.gcda
 /*.info
-test_pigeon.coverage/
+test_pigeoncoin.coverage/
 total.coverage/
 coverage_percent.txt
 
@@ -119,15 +119,15 @@ test/cache/*
 .autotools
 /doc/doxygen/
 
-libpigeonconsensus.pc
+libpigeoncoinconsensus.pc
 contrib/devtools/split-debug.sh
-src/qt/pigeon-qt.bash
+src/qt/pigeoncoin-qt.bash
 qa/pull-tester/tests-config.sh
 
 #development symlinks
-pigeon-cli
-pigeond
-pigeon-qt
+pigeoncoin-cli
+pigeoncoind
+pigeoncoin-qt
 make
 
 /docker/bin
@@ -135,3 +135,8 @@ make
 # CLion
 .idea
 cmake-build-debug
+
+depends/built
+depends/x86_64-pc-linux-gnu
+depends/sdk-sources/
+dist/

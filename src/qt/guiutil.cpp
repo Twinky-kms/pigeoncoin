@@ -1,5 +1,6 @@
 // Copyright (c) 2011-2015 The Bitcoin Core developers
-// Copyright (c) 2014-2020 The Pigeon Core developers
+// Copyright (c) 2014-2020 The Dash Core developers
+// Copyright (c) 2020 The Pigeoncoin developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -185,7 +186,7 @@ void setupAddressWidget(QValidatedLineEdit *widget, QWidget *parent)
 #if QT_VERSION >= 0x040700
     // We don't want translators to use own addresses in translations
     // and this is the only place, where this address is supplied.
-    widget->setPlaceholderText(QObject::tr("Enter a Pigeon address (e.g. %1)").arg(
+    widget->setPlaceholderText(QObject::tr("Enter a Pigeoncoin address (e.g. %1)").arg(
         QString::fromStdString(DummyAddress(Params()))));
 #endif
     widget->setValidator(new BitcoinAddressEntryValidator(parent));
@@ -203,8 +204,8 @@ void setupAmountWidget(QLineEdit *widget, QWidget *parent)
 
 bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out)
 {
-    // return if URI is not valid or is no pigeon: URI
-    if(!uri.isValid() || uri.scheme() != QString("pigeon"))
+    // return if URI is not valid or is no pigeoncoin: URI
+    if(!uri.isValid() || uri.scheme() != QString("pigeoncoin"))
         return false;
 
     SendCoinsRecipient rv;
@@ -250,7 +251,7 @@ bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out)
         {
             if(!i->second.isEmpty())
             {
-                if(!BitcoinUnits::parse(BitcoinUnits::PIGEON, i->second, &rv.amount))
+                if(!BitcoinUnits::parse(BitcoinUnits::PGN, i->second, &rv.amount))
                 {
                     return false;
                 }
@@ -270,13 +271,13 @@ bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out)
 
 bool parseBitcoinURI(QString uri, SendCoinsRecipient *out)
 {
-    // Convert pigeon:// to pigeon:
+    // Convert pigeoncoin:// to pigeoncoin:
     //
-    //    Cannot handle this later, because pigeon:// will cause Qt to see the part after // as host,
+    //    Cannot handle this later, because pigeoncoin:// will cause Qt to see the part after // as host,
     //    which will lower-case it (and thus invalidate the address).
-    if(uri.startsWith("pigeon://", Qt::CaseInsensitive))
+    if(uri.startsWith("pigeoncoin://", Qt::CaseInsensitive))
     {
-        uri.replace(0, 7, "pigeon:");
+        uri.replace(0, 7, "pigeoncoin:");
     }
     QUrl uriInstance(uri);
     return parseBitcoinURI(uriInstance, out);
@@ -284,12 +285,12 @@ bool parseBitcoinURI(QString uri, SendCoinsRecipient *out)
 
 QString formatBitcoinURI(const SendCoinsRecipient &info)
 {
-    QString ret = QString("pigeon:%1").arg(info.address);
+    QString ret = QString("pigeoncoin:%1").arg(info.address);
     int paramCount = 0;
 
     if (info.amount)
     {
-        ret += QString("?amount=%1").arg(BitcoinUnits::format(BitcoinUnits::PIGEON, info.amount, false, BitcoinUnits::separatorNever));
+        ret += QString("?amount=%1").arg(BitcoinUnits::format(BitcoinUnits::PGN, info.amount, false, BitcoinUnits::separatorNever));
         paramCount++;
     }
 
@@ -484,7 +485,7 @@ void openConfigfile()
 {
     fs::path pathConfig = GetConfigFile(gArgs.GetArg("-conf", BITCOIN_CONF_FILENAME));
 
-    /* Open pigeon.conf with the associated application */
+    /* Open pigeoncoin.conf with the associated application */
     if (fs::exists(pathConfig))
         QDesktopServices::openUrl(QUrl::fromLocalFile(boostPathToQString(pathConfig)));
 }
@@ -685,15 +686,15 @@ fs::path static StartupShortcutPath()
 {
     std::string chain = ChainNameFromCommandLine();
     if (chain == CBaseChainParams::MAIN)
-        return GetSpecialFolderPath(CSIDL_STARTUP) / "Pigeon Core.lnk";
+        return GetSpecialFolderPath(CSIDL_STARTUP) / "Pigeoncoin Core.lnk";
     if (chain == CBaseChainParams::TESTNET) // Remove this special case when CBaseChainParams::TESTNET = "testnet4"
-        return GetSpecialFolderPath(CSIDL_STARTUP) / "Pigeon Core (testnet).lnk";
-    return GetSpecialFolderPath(CSIDL_STARTUP) / strprintf("Pigeon Core (%s).lnk", chain);
+        return GetSpecialFolderPath(CSIDL_STARTUP) / "Pigeoncoin Core (testnet).lnk";
+    return GetSpecialFolderPath(CSIDL_STARTUP) / strprintf("Pigeoncoin Core (%s).lnk", chain);
 }
 
 bool GetStartOnSystemStartup()
 {
-    // check for "Pigeon Core*.lnk"
+    // check for "Pigeoncoin Core*.lnk"
     return fs::exists(StartupShortcutPath());
 }
 
@@ -783,8 +784,8 @@ fs::path static GetAutostartFilePath()
 {
     std::string chain = ChainNameFromCommandLine();
     if (chain == CBaseChainParams::MAIN)
-        return GetAutostartDir() / "pigeoncore.desktop";
-    return GetAutostartDir() / strprintf("pigeoncore-%s.lnk", chain);
+        return GetAutostartDir() / "pigeoncoincore.desktop";
+    return GetAutostartDir() / strprintf("pigeoncoincore-%s.lnk", chain);
 }
 
 bool GetStartOnSystemStartup()
@@ -823,13 +824,13 @@ bool SetStartOnSystemStartup(bool fAutoStart)
         if (!optionFile.good())
             return false;
         std::string chain = ChainNameFromCommandLine();
-        // Write a pigeoncore.desktop file to the autostart directory:
+        // Write a pigeoncoincore.desktop file to the autostart directory:
         optionFile << "[Desktop Entry]\n";
         optionFile << "Type=Application\n";
         if (chain == CBaseChainParams::MAIN)
-            optionFile << "Name=Pigeon Core\n";
+            optionFile << "Name=Pigeoncoin Core\n";
         else
-            optionFile << strprintf("Name=Pigeon Core (%s)\n", chain);
+            optionFile << strprintf("Name=Pigeoncoin Core (%s)\n", chain);
         optionFile << "Exec=" << pszExePath << strprintf(" -min -testnet=%d -regtest=%d\n", gArgs.GetBoolArg("-testnet", false), gArgs.GetBoolArg("-regtest", false));
         optionFile << "Terminal=false\n";
         optionFile << "Hidden=false\n";
@@ -850,7 +851,7 @@ bool SetStartOnSystemStartup(bool fAutoStart)
 LSSharedFileListItemRef findStartupItemInList(LSSharedFileListRef list, CFURLRef findUrl);
 LSSharedFileListItemRef findStartupItemInList(LSSharedFileListRef list, CFURLRef findUrl)
 {
-    // loop through the list of startup items and try to find the Pigeon Core app
+    // loop through the list of startup items and try to find the Pigeoncoin Core app
     CFArrayRef listSnapshot = LSSharedFileListCopySnapshot(list, nullptr);
     for(int i = 0; i < CFArrayGetCount(listSnapshot); i++) {
         LSSharedFileListItemRef item = (LSSharedFileListItemRef)CFArrayGetValueAtIndex(listSnapshot, i);
@@ -895,7 +896,7 @@ bool SetStartOnSystemStartup(bool fAutoStart)
     LSSharedFileListItemRef foundItem = findStartupItemInList(loginItems, bitcoinAppUrl);
 
     if(fAutoStart && !foundItem) {
-        // add Pigeon Core app to startup item list
+        // add Pigeoncoin Core app to startup item list
         LSSharedFileListInsertItemURL(loginItems, kLSSharedFileListItemBeforeFirst, nullptr, nullptr, bitcoinAppUrl, nullptr, nullptr);
     }
     else if(!fAutoStart && foundItem) {

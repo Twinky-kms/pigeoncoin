@@ -1,0 +1,22 @@
+[Unit]
+Description=Pigeoncoin's distributed currency daemon
+After=network.target
+
+[Service]
+User=pigeoncoincore
+Group=pigeoncoincore
+
+Type=forking
+PIDFile=/var/lib/pigeoncoind/pigeoncoind.pid
+ExecStart=/usr/bin/pigeoncoind -daemon -pid=/var/lib/pigeoncoind/pigeoncoind.pid \
+-conf=/etc/pigeoncoincore/pigeoncoin.conf -datadir=/var/lib/pigeoncoind -disablewallet
+
+Restart=always
+PrivateTmp=true
+TimeoutStopSec=60s
+TimeoutStartSec=2s
+StartLimitInterval=120s
+StartLimitBurst=5
+
+[Install]
+WantedBy=multi-user.target

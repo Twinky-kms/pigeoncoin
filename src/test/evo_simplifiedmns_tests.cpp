@@ -1,8 +1,9 @@
-// Copyright (c) 2018-2020 The Pigeon Core developers
+// Copyright (c) 2018-2020 The Dash Core developers
+// Copyright (c) 2020 The Pigeoncoin developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "test/test_pigeon.h"
+#include "test/test_pigeoncoin.h"
 
 #include "bls/bls.h"
 #include "evo/simplifiedmns.h"

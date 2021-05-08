@@ -1,4 +1,5 @@
-// Copyright (c) 2014-2019 The Pigeon Core developers
+// Copyright (c) 2014-2019 The Dash Core developers
+// Copyright (c) 2020 The Pigeoncoin developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -10,7 +11,7 @@
 #include "util.h"
 #include "utilstrencodings.h"
 
-#include "pigeon-config.h"
+#include "pigeoncoin-config.h"
 
 #include <mutex>
 #include <map>
@@ -401,7 +402,7 @@ static std::string GetCrashInfoStrNoDebugInfo(crash_info ci)
     CDataStream ds(SER_DISK, 0);
 
     crash_info_header hdr;
-    hdr.magic = "PigeonCrashInfo";
+    hdr.magic = "PigeoncoinCrashInfo";
     hdr.version = 1;
     hdr.exeFileName = g_exeFileBaseName;
     ds << hdr;
@@ -437,7 +438,7 @@ std::string GetCrashInfoStrFromSerializedStr(const std::string& ciStr)
         return "Error while deserializing crash info header";
     }
 
-    if (hdr.magic != "PigeonCrashInfo") {
+    if (hdr.magic != "PigeoncoinCrashInfo") {
         return "Invalid magic string";
     }
     if (hdr.version != 1) {

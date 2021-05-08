@@ -16,9 +16,9 @@ RUN apt-get update && apt-get install -y python3-pip
 RUN pip3 install pyzmq # really needed?
 RUN pip3 install jinja2
 
-# pigeon_hash
-RUN git clone https://github.com/pigeonpay/pigeon_hash
-RUN cd pigeon_hash && python3 setup.py install
+# pigeoncoin_hash
+RUN git clone https://github.com/pigeoncoin/pigeoncoin_hash
+RUN cd pigeoncoin_hash && python3 setup.py install
 
 ARG USER_ID=1000
 ARG GROUP_ID=1000
@@ -26,8 +26,8 @@ ARG GROUP_ID=1000
 # add user with specified (or default) user/group ids
 ENV USER_ID ${USER_ID}
 ENV GROUP_ID ${GROUP_ID}
-RUN groupadd -g ${GROUP_ID} pigeon
-RUN useradd -u ${USER_ID} -g pigeon -s /bin/bash -m -d /pigeon pigeon
+RUN groupadd -g ${GROUP_ID} pigeoncoin
+RUN useradd -u ${USER_ID} -g pigeoncoin -s /bin/bash -m -d /pigeoncoin pigeoncoin
 
 # Extra packages
 ARG BUILD_TARGET=linux64
@@ -45,13 +45,13 @@ RUN \
   update-alternatives --set x86_64-w64-mingw32-g++  /usr/bin/x86_64-w64-mingw32-g++-posix; \
   exit 0
 
-RUN mkdir /pigeon-src && \
+RUN mkdir /pigeoncoin-src && \
   mkdir -p /cache/ccache && \
   mkdir /cache/depends && \
   mkdir /cache/sdk-sources && \
-  chown $USER_ID:$GROUP_ID /pigeon-src && \
+  chown $USER_ID:$GROUP_ID /pigeoncoin-src && \
   chown $USER_ID:$GROUP_ID /cache && \
   chown $USER_ID:$GROUP_ID /cache -R
-WORKDIR /pigeon-src
+WORKDIR /pigeoncoin-src
 
-USER pigeon
+USER pigeoncoin

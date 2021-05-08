@@ -1,9 +1,10 @@
-// Copyright (c) 2018-2020 The Pigeon Core developers
+// Copyright (c) 2018-2020 The Dash Core developers
+// Copyright (c) 2020 The Pigeoncoin developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef PIGEON_EVODB_H
-#define PIGEON_EVODB_H
+#ifndef PIGEONCOIN_EVODB_H
+#define PIGEONCOIN_EVODB_H
 
 #include "dbwrapper.h"
 #include "sync.h"
@@ -108,4 +109,4 @@ private:
 
 extern CEvoDB* evoDb;
 
-#endif //PIGEON_EVODB_H
+#endif //PIGEONCOIN_EVODB_H

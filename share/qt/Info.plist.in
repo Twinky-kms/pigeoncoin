@@ -26,16 +26,16 @@
   <string>????</string>
 
   <key>CFBundleExecutable</key>
-  <string>Pigeon-Qt</string>
+  <string>Pigeoncoin-Qt</string>
 
   <key>CFBundleName</key>
-  <string>Pigeon-Qt</string>
+  <string>Pigeoncoin-Qt</string>
 
   <key>LSHasLocalizedDisplayName</key>
   <true/>
 
   <key>CFBundleIdentifier</key>
-  <string>org.pigeon.Pigeon-Qt</string>
+  <string>org.pigeoncoin.Pigeoncoin-Qt</string>
 
   <key>CFBundleURLTypes</key>
   <array>
@@ -43,10 +43,10 @@
       <key>CFBundleTypeRole</key>
       <string>Editor</string>
       <key>CFBundleURLName</key>
-      <string>org.pigeon.PigeonPayment</string>
+      <string>org.pigeoncoin.PigeoncoinPayment</string>
       <key>CFBundleURLSchemes</key>
       <array>
-        <string>pigeon</string>
+        <string>pigeoncoin</string>
       </array>
     </dict>
   </array>
@@ -55,9 +55,9 @@
   <array>
     <dict>
       <key>UTTypeIdentifier</key>
-      <string>org.pigeon.paymentrequest</string>
+      <string>org.pigeoncoin.paymentrequest</string>
       <key>UTTypeDescription</key>
-      <string>Pigeon payment request</string>
+      <string>Pigeoncoin payment request</string>
       <key>UTTypeConformsTo</key>
       <array>
         <string>public.data</string>
@@ -65,10 +65,10 @@
       <key>UTTypeTagSpecification</key>
       <dict>
         <key>public.mime-type</key>
-        <string>application/x-pigeon-payment-request</string>
+        <string>application/x-pigeoncoin-payment-request</string>
         <key>public.filename-extension</key>
         <array>
-          <string>pigeonpromentrequest</string>
+          <string>pigeoncoinmentrequest</string>
         </array>
       </dict>
     </dict>
@@ -81,7 +81,7 @@
       <string>Editor</string>
       <key>LSItemContentTypes</key>
       <array>
-        <string>org.pigeon.paymentrequest</string>
+        <string>org.pigeoncoin.paymentrequest</string>
       </array>
       <key>LSHandlerRank</key>
       <string>Owner</string>

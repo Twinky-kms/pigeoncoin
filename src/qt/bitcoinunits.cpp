@@ -1,5 +1,6 @@
 // Copyright (c) 2011-2015 The Bitcoin Core developers
-// Copyright (c) 2014-2019 The Pigeon Core developers
+// Copyright (c) 2014-2019 The Dash Core developers
+// Copyright (c) 2020 The Pigeoncoin developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -19,10 +20,10 @@ BitcoinUnits::BitcoinUnits(QObject *parent):
 QList<BitcoinUnits::Unit> BitcoinUnits::availableUnits()
 {
     QList<BitcoinUnits::Unit> unitlist;
-    unitlist.append(PIGEON);
-    unitlist.append(mPIGEON);
-    unitlist.append(uPIGEON);
-    unitlist.append(duffs);
+    unitlist.append(PGN);
+    unitlist.append(mPGN);
+    unitlist.append(uPGN);
+    unitlist.append(ruffs);
     return unitlist;
 }
 
@@ -30,10 +31,10 @@ bool BitcoinUnits::valid(int unit)
 {
     switch(unit)
     {
-    case PIGEON:
-    case mPIGEON:
-    case uPIGEON:
-    case duffs:
+    case PGN:
+    case mPGN:
+    case uPGN:
+    case ruffs:
         return true;
     default:
         return false;
@@ -46,10 +47,10 @@ QString BitcoinUnits::name(int unit)
     {
         switch(unit)
         {
-            case PIGEON: return QString("PIGEON");
-            case mPIGEON: return QString("mPIGEON");
-            case uPIGEON: return QString::fromUtf8("μPIGEON");
-            case duffs: return QString("duffs");
+            case PGN: return QString("PGN");
+            case mPGN: return QString("mPGN");
+            case uPGN: return QString::fromUtf8("μPGN");
+            case ruffs: return QString("ruffs");
             default: return QString("???");
         }
     }
@@ -57,10 +58,10 @@ QString BitcoinUnits::name(int unit)
     {
         switch(unit)
         {
-            case PIGEON: return QString("tPIGEON");
-            case mPIGEON: return QString("mtPIGEON");
-            case uPIGEON: return QString::fromUtf8("μtPIGEON");
-            case duffs: return QString("tduffs");
+            case PGN: return QString("tPGN");
+            case mPGN: return QString("mtPGN");
+            case uPGN: return QString::fromUtf8("μtPGN");
+            case ruffs: return QString("tduffs");
             default: return QString("???");
         }
     }
@@ -72,10 +73,10 @@ QString BitcoinUnits::description(int unit)
     {
         switch(unit)
         {
-            case PIGEON: return QString("Pigeon");
-            case mPIGEON: return QString("Milli-Pigeon (1 / 1" THIN_SP_UTF8 "000)");
-            case uPIGEON: return QString("Micro-Pigeon (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
-            case duffs: return QString("Ten Nano-Pigeon (1 / 100" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+            case PGN: return QString("Pigeoncoin");
+            case mPGN: return QString("Milli-Pigeoncoin (1 / 1" THIN_SP_UTF8 "000)");
+            case uPGN: return QString("Micro-Pigeoncoin (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+            case ruffs: return QString("Ten Nano-Pigeoncoin (1 / 100" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
             default: return QString("???");
         }
     }
@@ -83,10 +84,10 @@ QString BitcoinUnits::description(int unit)
     {
         switch(unit)
         {
-            case PIGEON: return QString("TestPigeons");
-            case mPIGEON: return QString("Milli-TestPigeon (1 / 1" THIN_SP_UTF8 "000)");
-            case uPIGEON: return QString("Micro-TestPigeon (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
-            case duffs: return QString("Ten Nano-TestPigeon (1 / 100" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+            case PGN: return QString("TestPigeoncoins");
+            case mPGN: return QString("Milli-TestPigeoncoin (1 / 1" THIN_SP_UTF8 "000)");
+            case uPGN: return QString("Micro-TestPigeoncoin (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+            case ruffs: return QString("Ten Nano-TestPigeoncoin (1 / 100" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
             default: return QString("???");
         }
     }
@@ -96,10 +97,10 @@ qint64 BitcoinUnits::factor(int unit)
 {
     switch(unit)
     {
-    case PIGEON:  return 100000000;
-    case mPIGEON: return 100000;
-    case uPIGEON: return 100;
-    case duffs: return 1;
+    case PGN:  return 100000000;
+    case mPGN: return 100000;
+    case uPGN: return 100;
+    case ruffs: return 1;
     default:   return 100000000;
     }
 }
@@ -108,10 +109,10 @@ int BitcoinUnits::decimals(int unit)
 {
     switch(unit)
     {
-    case PIGEON: return 8;
-    case mPIGEON: return 5;
-    case uPIGEON: return 2;
-    case duffs: return 0;
+    case PGN: return 8;
+    case mPGN: return 5;
+    case uPGN: return 2;
+    case ruffs: return 0;
     default: return 0;
     }
 }

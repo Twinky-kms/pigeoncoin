@@ -1,5 +1,6 @@
 // Copyright (c) 2011-2015 The Bitcoin Core developers
-// Copyright (c) 2014-2020 The Pigeon Core developers
+// Copyright (c) 2014-2020 The Dash Core developers
+// Copyright (c) 2020 The Pigeoncoin developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -12,7 +13,7 @@ static const int MODEL_UPDATE_DELAY = 250;
 /* AskPassphraseDialog -- Maximum passphrase length */
 static const int MAX_PASSPHRASE_SIZE = 1024;
 
-/* PigeonGUI -- Size of icons in status bar */
+/* PigeoncoinGUI -- Size of icons in status bar */
 static const int STATUSBAR_ICONSIZE = 16;
 
 static const bool DEFAULT_SPLASHSCREEN = true;
@@ -31,11 +32,11 @@ static const int MAX_URI_LENGTH = 255;
 /* Number of frames in spinner animation */
 #define SPINNER_FRAMES 36
 
-#define QAPP_ORG_NAME "Pigeon"
-#define QAPP_ORG_DOMAIN "pigeon.org"
-#define QAPP_APP_NAME_DEFAULT "Pigeon-Qt"
-#define QAPP_APP_NAME_TESTNET "Pigeon-Qt-testnet"
-#define QAPP_APP_NAME_DEVNET "Pigeon-Qt-%s"
-#define QAPP_APP_NAME_REGTEST "Pigeon-Qt-regtest"
+#define QAPP_ORG_NAME "Pigeoncoin"
+#define QAPP_ORG_DOMAIN "pigeoncoin.org"
+#define QAPP_APP_NAME_DEFAULT "Pigeoncoin-Qt"
+#define QAPP_APP_NAME_TESTNET "Pigeoncoin-Qt-testnet"
+#define QAPP_APP_NAME_DEVNET "Pigeoncoin-Qt-%s"
+#define QAPP_APP_NAME_REGTEST "Pigeoncoin-Qt-regtest"
 
 #endif // BITCOIN_QT_GUICONSTANTS_H

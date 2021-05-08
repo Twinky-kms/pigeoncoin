@@ -1,9 +1,10 @@
-// Copyright (c) 2018-2019 The Pigeon Core developers
+// Copyright (c) 2018-2019 The Dash Core developers
+// Copyright (c) 2020 The Pigeoncoin developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef PIGEON_SPECIALTX_H
-#define PIGEON_SPECIALTX_H
+#ifndef PIGEONCOIN_SPECIALTX_H
+#define PIGEONCOIN_SPECIALTX_H
 
 #include "primitives/transaction.h"
 #include "streams.h"
@@ -49,4 +50,4 @@ void SetTxPayload(CMutableTransaction& tx, const T& payload)
 
 uint256 CalcTxInputsHash(const CTransaction& tx);
 
-#endif //PIGEON_SPECIALTX_H
+#endif //PIGEONCOIN_SPECIALTX_H

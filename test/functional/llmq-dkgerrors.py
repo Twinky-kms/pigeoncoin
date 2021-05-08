@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-# Copyright (c) 2015-2020 The Pigeon Core developers
+# Copyright (c) 2015-2020 The Dash Core developers
+# Copyright (c) 2020 The Pigeoncoin developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-from test_framework.test_framework import PigeonTestFramework
+from test_framework.test_framework import PigeoncoinTestFramework
 from test_framework.util import *
 
 '''
@@ -13,9 +14,9 @@ Simulate and check DKG errors
 
 '''
 
-class LLMQDKGErrors(PigeonTestFramework):
+class LLMQDKGErrors(PigeoncoinTestFramework):
     def set_test_params(self):
-        self.set_pigeon_test_params(6, 5, [["-whitelist=127.0.0.1"]] * 6, fast_dip3_enforcement=True)
+        self.set_pigeoncoin_test_params(6, 5, [["-whitelist=127.0.0.1"]] * 6, fast_dip3_enforcement=True)
 
     def run_test(self):
 

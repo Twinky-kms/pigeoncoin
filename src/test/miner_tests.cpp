@@ -19,7 +19,7 @@
 #include "util.h"
 #include "utilstrencodings.h"
 
-#include "test/test_pigeon.h"
+#include "test/test_pigeoncoin.h"
 
 #include <memory>
 
@@ -243,7 +243,7 @@ BOOST_AUTO_TEST_CASE(CreateNewBlock_validity)
 
             // This will usually succeed in the first round as we take the nonce from blockinfo
             // It's however usefull when adding new blocks with unknown nonces (you should add the found block to blockinfo)
-            while (!CheckProofOfWork(pblock->GetHash(), pblock->nBits, chainparams.GetConsensus())) {
+            while (!CheckProofOfWork(pblock->GetPOWHash(), pblock->nBits, chainparams.GetConsensus())) {
                 pblock->nNonce++;
             }
         }
@@ -388,8 +388,8 @@ BOOST_AUTO_TEST_CASE(CreateNewBlock_validity)
 
     // subsidy changing
     // int nHeight = chainActive.Height();
-    // // Create an actual 209999-long block chain (without valid blocks).
-    // while (chainActive.Tip()->nHeight < 209999) {
+    // // Create an actual 208757-long block chain (without valid blocks).
+    // while (chainActive.Tip()->nHeight < 208757) {
     //     CBlockIndex* prev = chainActive.Tip();
     //     CBlockIndex* next = new CBlockIndex();
     //     next->phashBlock = new uint256(InsecureRand256());

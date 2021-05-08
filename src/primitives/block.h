@@ -1,5 +1,6 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2015 The Bitcoin Core developers
+// Copyright (c) 2009-2016 The Bitcoin Core developers
+// Copyright (c) 2017 The Pigeon Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -86,7 +87,6 @@ public:
     // network and disk
     std::vector<CTransactionRef> vtx;
     mutable CTxOut txoutFounder; // founder payment
-
     // memory only
     mutable bool fChecked;
 
@@ -112,8 +112,8 @@ public:
     void SetNull()
     {
         CBlockHeader::SetNull();
-        vtx.clear();
         txoutFounder = CTxOut();
+        vtx.clear();
         fChecked = false;
     }
 
@@ -129,9 +129,13 @@ public:
         return block;
     }
 
+    // void SetPrevBlockHash(uint256 prevHash) 
+    // {
+    //     block.hashPrevBlock = prevHash;
+    // }
+
     std::string ToString() const;
 };
-
 
 /** Describes a place in the block chain to another node such that if the
  * other node doesn't have the same branch, it can find a recent common trunk.
@@ -143,7 +147,7 @@ struct CBlockLocator
 
     CBlockLocator() {}
 
-    CBlockLocator(const std::vector<uint256>& vHaveIn) : vHave(vHaveIn) {}
+    explicit CBlockLocator(const std::vector<uint256>& vHaveIn) : vHave(vHaveIn) {}
 
     ADD_SERIALIZE_METHODS;
 

@@ -1,4 +1,5 @@
-// Copyright (c) 2014-2020 The Pigeon Core developers
+// Copyright (c) 2014-2020 The Dash Core developers
+// Copyright (c) 2020 The Pigeoncoin developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -7,7 +8,7 @@
 #include "key.h"
 #include "util.h"
 #include "utilstrencodings.h"
-#include "test/test_pigeon.h"
+#include "test/test_pigeoncoin.h"
 #include "bip39.h"
 
 #include <boost/test/unit_test.hpp>

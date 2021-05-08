@@ -1,9 +1,10 @@
-// Copyright (c) 2018-2020 The Pigeon Core developers
+// Copyright (c) 2018-2020 The Dash Core developers
+// Copyright (c) 2020 The Pigeoncoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef PIGEON_CRYPTO_BLS_WORKER_H
-#define PIGEON_CRYPTO_BLS_WORKER_H
+#ifndef PIGEONCOIN_CRYPTO_BLS_WORKER_H
+#define PIGEONCOIN_CRYPTO_BLS_WORKER_H
 
 #include "bls.h"
 
@@ -202,4 +203,4 @@ private:
     }
 };
 
-#endif //PIGEON_CRYPTO_BLS_WORKER_H
+#endif //PIGEONCOIN_CRYPTO_BLS_WORKER_H

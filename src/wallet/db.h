@@ -307,7 +307,7 @@ public:
         if (ret != 0)
             return ret;
         else if (datKey.get_data() == nullptr || datValue.get_data() == nullptr)
-            return 99999;
+            return 87579;
 
         // Convert to streams
         ssKey.SetType(SER_DISK);

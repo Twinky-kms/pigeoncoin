@@ -12,7 +12,7 @@
 
 #include "support/events.h"
 
-#include "test/test_pigeon.h"
+#include "test/test_pigeoncoin.h"
 
 #include <vector>
 

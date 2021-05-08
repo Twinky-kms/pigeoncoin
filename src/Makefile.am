@@ -1,5 +1,6 @@
 # Copyright (c) 2013-2016 The Bitcoin Core developers
-# Copyright (c) 2014-2018 The Pigeon Core developers
+# Copyright (c) 2014-2018 The Dash Core developers
+# Copyright (c) 2020 The Pigeoncoin developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -45,36 +46,36 @@ BITCOIN_INCLUDES += $(UNIVALUE_CFLAGS)
 
 BLS_LIBS=-lchiabls -lgmp
 
-LIBBITCOIN_SERVER=libpigeon_server.a
-LIBBITCOIN_COMMON=libpigeon_common.a
-LIBBITCOIN_CONSENSUS=libpigeon_consensus.a
-LIBBITCOIN_CLI=libpigeon_cli.a
-LIBBITCOIN_UTIL=libpigeon_util.a
-LIBBITCOIN_CRYPTO_BASE=crypto/libpigeon_crypto_base.a
-LIBBITCOINQT=qt/libpigeonqt.a
+LIBBITCOIN_SERVER=libpigeoncoin_server.a
+LIBBITCOIN_COMMON=libpigeoncoin_common.a
+LIBBITCOIN_CONSENSUS=libpigeoncoin_consensus.a
+LIBBITCOIN_CLI=libpigeoncoin_cli.a
+LIBBITCOIN_UTIL=libpigeoncoin_util.a
+LIBBITCOIN_CRYPTO_BASE=crypto/libpigeoncoin_crypto_base.a
+LIBBITCOINQT=qt/libpigeoncoinqt.a
 LIBSECP256K1=secp256k1/libsecp256k1.la
 
 if ENABLE_ZMQ
-LIBBITCOIN_ZMQ=libpigeon_zmq.a
+LIBBITCOIN_ZMQ=libpigeoncoin_zmq.a
 endif
 if BUILD_BITCOIN_LIBS
-LIBBITCOINCONSENSUS=libpigeonconsensus.la
+LIBBITCOINCONSENSUS=libpigeoncoinconsensus.la
 endif
 if ENABLE_WALLET
-LIBBITCOIN_WALLET=libpigeon_wallet.a
+LIBBITCOIN_WALLET=libpigeoncoin_wallet.a
 endif
 
 LIBBITCOIN_CRYPTO= $(LIBBITCOIN_CRYPTO_BASE)
 if ENABLE_SSE41
-LIBBITCOIN_CRYPTO_SSE41 = crypto/libpigeon_crypto_sse41.a
+LIBBITCOIN_CRYPTO_SSE41 = crypto/libpigeoncoin_crypto_sse41.a
 LIBBITCOIN_CRYPTO += $(LIBBITCOIN_CRYPTO_SSE41)
 endif
 if ENABLE_AVX2
-LIBBITCOIN_CRYPTO_AVX2 = crypto/libpigeon_crypto_avx2.a
+LIBBITCOIN_CRYPTO_AVX2 = crypto/libpigeoncoin_crypto_avx2.a
 LIBBITCOIN_CRYPTO += $(LIBBITCOIN_CRYPTO_AVX2)
 endif
 if ENABLE_SHANI
-LIBBITCOIN_CRYPTO_SHANI = crypto/libpigeon_crypto_shani.a
+LIBBITCOIN_CRYPTO_SHANI = crypto/libpigeoncoin_crypto_shani.a
 LIBBITCOIN_CRYPTO += $(LIBBITCOIN_CRYPTO_SHANI)
 endif
 
@@ -101,15 +102,15 @@ TESTS =
 BENCHMARKS =
 
 if BUILD_BITCOIND
-  bin_PROGRAMS += pigeond
+  bin_PROGRAMS += pigeoncoind
 endif
 
 if BUILD_BITCOIN_UTILS
-  bin_PROGRAMS += pigeon-cli pigeon-tx
+  bin_PROGRAMS += pigeoncoin-cli pigeoncoin-tx
 endif
 
 .PHONY: FORCE check-symbols check-security
-# pigeon core #
+# pigeoncoin core #
 BITCOIN_CORE_H = \
   addrdb.h \
   addressindex.h \
@@ -192,6 +193,7 @@ BITCOIN_CORE_H = \
   masternode/masternode-payments.h \
   masternode/masternode-sync.h \
   masternode/masternode-utils.h \
+  masternode/masternode-collaterals.h \
   memusage.h \
   merkleblock.h \
   messagesigner.h \
@@ -266,12 +268,12 @@ obj/build.h: FORCE
 	@$(MKDIR_P) $(builddir)/obj
 	@$(top_srcdir)/share/genbuild.sh "$(abs_top_builddir)/src/obj/build.h" \
 	  "$(abs_top_srcdir)"
-libpigeon_util_a-clientversion.$(OBJEXT): obj/build.h
+libpigeoncoin_util_a-clientversion.$(OBJEXT): obj/build.h
 
-# server: shared between pigeond and pigeon-qt
-libpigeon_server_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(MINIUPNPC_CPPFLAGS) $(EVENT_CFLAGS) $(EVENT_PTHREADS_CFLAGS)
-libpigeon_server_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libpigeon_server_a_SOURCES = \
+# server: shared between pigeoncoind and pigeoncoin-qt
+libpigeoncoin_server_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(MINIUPNPC_CPPFLAGS) $(EVENT_CFLAGS) $(EVENT_PTHREADS_CFLAGS)
+libpigeoncoin_server_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libpigeoncoin_server_a_SOURCES = \
   addrdb.cpp \
   addrman.cpp \
   batchedlogger.cpp \
@@ -354,20 +356,20 @@ libpigeon_server_a_SOURCES = \
   $(BITCOIN_CORE_H)
 
 if ENABLE_ZMQ
-libpigeon_zmq_a_CPPFLAGS = $(BITCOIN_INCLUDES) $(ZMQ_CFLAGS)
-libpigeon_zmq_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libpigeon_zmq_a_SOURCES = \
+libpigeoncoin_zmq_a_CPPFLAGS = $(BITCOIN_INCLUDES) $(ZMQ_CFLAGS)
+libpigeoncoin_zmq_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libpigeoncoin_zmq_a_SOURCES = \
   zmq/zmqabstractnotifier.cpp \
   zmq/zmqnotificationinterface.cpp \
   zmq/zmqpublishnotifier.cpp
 endif
 
 
-# wallet: shared between pigeond and pigeon-qt, but only linked
+# wallet: shared between pigeoncoind and pigeoncoin-qt, but only linked
 # when wallet enabled
-libpigeon_wallet_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-libpigeon_wallet_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libpigeon_wallet_a_SOURCES = \
+libpigeoncoin_wallet_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+libpigeoncoin_wallet_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libpigeoncoin_wallet_a_SOURCES = \
   keepass.cpp \
   privatesend/privatesend-client.cpp \
   privatesend/privatesend-util.cpp \
@@ -380,51 +382,13 @@ libpigeon_wallet_a_SOURCES = \
   $(BITCOIN_CORE_H)
 
 # crypto primitives library
-crypto_libpigeon_crypto_base_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_CONFIG_INCLUDES) $(PIC_FLAGS)
-crypto_libpigeon_crypto_base_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS) $(PIC_FLAGS)
-crypto_libpigeon_crypto_base_a_SOURCES = \
-  crypto/aes.cpp \
-  crypto/aes.h \
-  crypto/chacha_poly_aead.h \
-  crypto/chacha_poly_aead.cpp \
-  crypto/chacha20.h \
-  crypto/chacha20.cpp \
-  crypto/common.h \
-  crypto/hmac_sha256.cpp \
-  crypto/hmac_sha256.h \
-  crypto/hmac_sha512.cpp \
-  crypto/hmac_sha512.h \
-  crypto/poly1305.h \
-  crypto/poly1305.cpp \
-  crypto/ripemd160.cpp \
-  crypto/aes_helper.c \
-  crypto/ripemd160.h \
-  crypto/sha1.cpp \
-  crypto/sha1.h \
-  crypto/sha256.cpp \
-  crypto/sha256.h \
-  crypto/sha512.cpp \
-  crypto/sha512.h
-
-if USE_ASM
-crypto_libpigeon_crypto_base_a_SOURCES += crypto/sha256_sse4.cpp
-endif
-
-crypto_libpigeon_crypto_sse41_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-crypto_libpigeon_crypto_sse41_a_CPPFLAGS = $(AM_CPPFLAGS)
-crypto_libpigeon_crypto_sse41_a_CXXFLAGS += $(SSE41_CXXFLAGS)
-crypto_libpigeon_crypto_sse41_a_CPPFLAGS += -DENABLE_SSE41
-crypto_libpigeon_crypto_sse41_a_SOURCES = crypto/sha256_sse41.cpp
-
-crypto_libpigeon_crypto_avx2_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-crypto_libpigeon_crypto_avx2_a_CPPFLAGS = $(AM_CPPFLAGS)
-crypto_libpigeon_crypto_avx2_a_CXXFLAGS += $(AVX2_CXXFLAGS)
-crypto_libpigeon_crypto_avx2_a_CPPFLAGS += -DENABLE_AVX2
-crypto_libpigeon_crypto_avx2_a_SOURCES = crypto/sha256_avx2.cpp
+crypto_libpigeoncoin_crypto_base_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_CONFIG_INCLUDES) $(PIC_FLAGS)
+crypto_libpigeoncoin_crypto_base_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS) $(PIC_FLAGS)
+crypto_libpigeoncoin_crypto_base_a_SOURCES = \
 
 # x21s
 crypto_libpigeon_crypto_base_a_SOURCES += \
-  algo/sph_groestl.h \
+algo/sph_groestl.h \
   algo/sph_types.h \
   algo/sph_blake.h \
   algo/sph_bmw.h \
@@ -472,18 +436,35 @@ crypto_libpigeon_crypto_base_a_SOURCES += \
   algo/sponge.cpp \
   algo/sph_sha2.c \
   algo/gost_streebog.c
+  
+if USE_ASM
+crypto_libpigeoncoin_crypto_base_a_SOURCES += crypto/sha256_sse4.cpp
+endif
 
-crypto_libpigeon_crypto_shani_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-crypto_libpigeon_crypto_shani_a_CPPFLAGS = $(AM_CPPFLAGS)
-crypto_libpigeon_crypto_shani_a_CXXFLAGS += $(SHANI_CXXFLAGS)
-crypto_libpigeon_crypto_shani_a_CPPFLAGS += -DENABLE_SHANI
-crypto_libpigeon_crypto_shani_a_SOURCES = crypto/sha256_shani.cpp
+crypto_libpigeoncoin_crypto_sse41_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+crypto_libpigeoncoin_crypto_sse41_a_CPPFLAGS = $(AM_CPPFLAGS)
+crypto_libpigeoncoin_crypto_sse41_a_CXXFLAGS += $(SSE41_CXXFLAGS)
+crypto_libpigeoncoin_crypto_sse41_a_CPPFLAGS += -DENABLE_SSE41
+crypto_libpigeoncoin_crypto_sse41_a_SOURCES = crypto/sha256_sse41.cpp
+
+crypto_libpigeoncoin_crypto_avx2_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+crypto_libpigeoncoin_crypto_avx2_a_CPPFLAGS = $(AM_CPPFLAGS)
+crypto_libpigeoncoin_crypto_avx2_a_CXXFLAGS += $(AVX2_CXXFLAGS)
+crypto_libpigeoncoin_crypto_avx2_a_CPPFLAGS += -DENABLE_AVX2
+crypto_libpigeoncoin_crypto_avx2_a_SOURCES = crypto/sha256_avx2.cpp
+
+crypto_libpigeoncoin_crypto_shani_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+crypto_libpigeoncoin_crypto_shani_a_CPPFLAGS = $(AM_CPPFLAGS)
+crypto_libpigeoncoin_crypto_shani_a_CXXFLAGS += $(SHANI_CXXFLAGS)
+crypto_libpigeoncoin_crypto_shani_a_CPPFLAGS += -DENABLE_SHANI
+crypto_libpigeoncoin_crypto_shani_a_SOURCES = crypto/sha256_shani.cpp
 
 # consensus: shared between all executables that validate any consensus rules.
-libpigeon_consensus_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-libpigeon_consensus_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libpigeon_consensus_a_SOURCES = \
+libpigeoncoin_consensus_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+libpigeoncoin_consensus_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libpigeoncoin_consensus_a_SOURCES = \
   amount.h \
+  founder_payment.h \
   arith_uint256.cpp \
   arith_uint256.h \
   bls/bls.cpp \
@@ -492,7 +473,8 @@ libpigeon_consensus_a_SOURCES = \
   consensus/merkle.h \
   consensus/params.h \
   consensus/validation.h \
-  founderpayment.h \
+  hash_selection.h \
+  hash_selection.cpp \
   hash.cpp \
   hash.h \
   prevector.h \
@@ -502,7 +484,7 @@ libpigeon_consensus_a_SOURCES = \
   primitives/transaction.h \
   pubkey.cpp \
   pubkey.h \
-  script/pigeonconsensus.cpp \
+  script/pigeoncoinconsensus.cpp \
   script/interpreter.cpp \
   script/interpreter.h \
   script/script.cpp \
@@ -518,18 +500,19 @@ libpigeon_consensus_a_SOURCES = \
   utilstrencodings.h \
   version.h
 
-# common: shared between pigeond, and pigeon-qt and non-server tools
-libpigeon_common_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-libpigeon_common_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libpigeon_common_a_SOURCES = \
+# common: shared between pigeoncoind, and pigeoncoin-qt and non-server tools
+libpigeoncoin_common_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+libpigeoncoin_common_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libpigeoncoin_common_a_SOURCES = \
   base58.cpp \
+  founder_payment.cpp \
   bip39.cpp \
   chainparams.cpp \
+  masternode/masternode-collaterals.cpp \
   coins.cpp \
   compressor.cpp \
   core_read.cpp \
   core_write.cpp \
-  founderpayment.cpp \
   hdchain.cpp \
   key.cpp \
   keystore.cpp \
@@ -547,9 +530,9 @@ libpigeon_common_a_SOURCES = \
 # util: shared between all executables.
 # This library *must* be included to make sure that the glibc
 # backward-compatibility objects and their sanity checks are linked.
-libpigeon_util_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-libpigeon_util_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libpigeon_util_a_SOURCES = \
+libpigeoncoin_util_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+libpigeoncoin_util_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libpigeoncoin_util_a_SOURCES = \
   bls/bls_batchverifier.h \
   bls/bls_ies.cpp \
   bls/bls_ies.h \
@@ -575,31 +558,31 @@ libpigeon_util_a_SOURCES = \
   $(BITCOIN_CORE_H)
 
 if GLIBC_BACK_COMPAT
-libpigeon_util_a_SOURCES += compat/glibc_compat.cpp
+libpigeoncoin_util_a_SOURCES += compat/glibc_compat.cpp
 AM_LDFLAGS += -Wl,--wrap=log2f -Wl,--wrap=__divmoddi4
 endif
 
-# cli: shared between pigeon-cli and pigeon-qt
-libpigeon_cli_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-libpigeon_cli_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libpigeon_cli_a_SOURCES = \
+# cli: shared between pigeoncoin-cli and pigeoncoin-qt
+libpigeoncoin_cli_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+libpigeoncoin_cli_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libpigeoncoin_cli_a_SOURCES = \
   rpc/client.cpp \
   $(BITCOIN_CORE_H)
 
-nodist_libpigeon_util_a_SOURCES = $(srcdir)/obj/build.h
+nodist_libpigeoncoin_util_a_SOURCES = $(srcdir)/obj/build.h
 #
 
-# pigeond binary #
-pigeond_SOURCES = pigeond.cpp
-pigeond_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-pigeond_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-pigeond_LDFLAGS = $(LDFLAGS_WRAP_EXCEPTIONS) $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+# pigeoncoind binary #
+pigeoncoind_SOURCES = pigeoncoind.cpp
+pigeoncoind_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+pigeoncoind_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+pigeoncoind_LDFLAGS = $(LDFLAGS_WRAP_EXCEPTIONS) $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-pigeond_SOURCES += pigeond-res.rc
+pigeoncoind_SOURCES += pigeoncoind-res.rc
 endif
 
-pigeond_LDADD = \
+pigeoncoind_LDADD = \
   $(LIBBITCOIN_SERVER) \
   $(LIBBITCOIN_COMMON) \
   $(LIBUNIVALUE) \
@@ -613,37 +596,37 @@ pigeond_LDADD = \
   $(LIBMEMENV) \
   $(LIBSECP256K1)
 
-pigeond_LDADD += $(BACKTRACE_LIB) $(BOOST_LIBS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS) $(ZMQ_LIBS) $(BLS_LIBS)
+pigeoncoind_LDADD += $(BACKTRACE_LIB) $(BOOST_LIBS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS) $(ZMQ_LIBS) $(BLS_LIBS)
 
-# pigeon-cli binary #
-pigeon_cli_SOURCES = pigeon-cli.cpp
-pigeon_cli_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(EVENT_CFLAGS)
-pigeon_cli_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-pigeon_cli_LDFLAGS = $(LDFLAGS_WRAP_EXCEPTIONS) $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+# pigeoncoin-cli binary #
+pigeoncoin_cli_SOURCES = pigeoncoin-cli.cpp
+pigeoncoin_cli_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(EVENT_CFLAGS)
+pigeoncoin_cli_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+pigeoncoin_cli_LDFLAGS = $(LDFLAGS_WRAP_EXCEPTIONS) $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-pigeon_cli_SOURCES += pigeon-cli-res.rc
+pigeoncoin_cli_SOURCES += pigeoncoin-cli-res.rc
 endif
 
-pigeon_cli_LDADD = \
+pigeoncoin_cli_LDADD = \
   $(LIBBITCOIN_CLI) \
   $(LIBUNIVALUE) \
   $(LIBBITCOIN_UTIL) \
   $(LIBBITCOIN_CRYPTO)
-pigeon_cli_LDADD += $(BACKTRACE_LIB) $(BOOST_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(EVENT_LIBS) $(BLS_LIBS)
+pigeoncoin_cli_LDADD += $(BACKTRACE_LIB) $(BOOST_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(EVENT_LIBS) $(BLS_LIBS)
 #
 
-# pigeon-tx binary #
-pigeon_tx_SOURCES = pigeon-tx.cpp
-pigeon_tx_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-pigeon_tx_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-pigeon_tx_LDFLAGS = $(LDFLAGS_WRAP_EXCEPTIONS) $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+# pigeoncoin-tx binary #
+pigeoncoin_tx_SOURCES = pigeoncoin-tx.cpp
+pigeoncoin_tx_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+pigeoncoin_tx_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+pigeoncoin_tx_LDFLAGS = $(LDFLAGS_WRAP_EXCEPTIONS) $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-pigeon_tx_SOURCES += pigeon-tx-res.rc
+pigeoncoin_tx_SOURCES += pigeoncoin-tx-res.rc
 endif
 
-pigeon_tx_LDADD = \
+pigeoncoin_tx_LDADD = \
   $(LIBUNIVALUE) \
   $(LIBBITCOIN_COMMON) \
   $(LIBBITCOIN_UTIL) \
@@ -651,22 +634,22 @@ pigeon_tx_LDADD = \
   $(LIBBITCOIN_CRYPTO) \
   $(LIBSECP256K1)
 
-pigeon_tx_LDADD += $(BACKTRACE_LIB) $(BOOST_LIBS) $(CRYPTO_LIBS) $(BLS_LIBS)
+pigeoncoin_tx_LDADD += $(BACKTRACE_LIB) $(BOOST_LIBS) $(CRYPTO_LIBS) $(BLS_LIBS)
 #
 
-# pigeonconsensus library #
+# pigeoncoinconsensus library #
 if BUILD_BITCOIN_LIBS
-include_HEADERS = script/pigeonconsensus.h
-libpigeonconsensus_la_SOURCES = support/cleanse.cpp $(crypto_libpigeon_crypto_base_a_SOURCES) $(libpigeon_consensus_a_SOURCES)
+include_HEADERS = script/pigeoncoinconsensus.h
+libpigeoncoinconsensus_la_SOURCES = support/cleanse.cpp $(crypto_libpigeoncoin_crypto_base_a_SOURCES) $(libpigeoncoin_consensus_a_SOURCES)
 
 if GLIBC_BACK_COMPAT
-  libpigeonconsensus_la_SOURCES += compat/glibc_compat.cpp
+  libpigeoncoinconsensus_la_SOURCES += compat/glibc_compat.cpp
 endif
 
-libpigeonconsensus_la_LDFLAGS = $(AM_LDFLAGS) -no-undefined $(RELDFLAGS)
-libpigeonconsensus_la_LIBADD = $(LIBSECP256K1) $(BLS_LIBS)
-libpigeonconsensus_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(builddir)/obj -I$(srcdir)/secp256k1/include -DBUILD_BITCOIN_INTERNAL
-libpigeonconsensus_la_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libpigeoncoinconsensus_la_LDFLAGS = $(AM_LDFLAGS) -no-undefined $(RELDFLAGS)
+libpigeoncoinconsensus_la_LIBADD = $(LIBSECP256K1) $(BLS_LIBS)
+libpigeoncoinconsensus_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(builddir)/obj -I$(srcdir)/secp256k1/include -DBUILD_BITCOIN_INTERNAL
+libpigeoncoinconsensus_la_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 
 endif
 #
@@ -700,12 +683,12 @@ EXTRA_DIST = $(CTAES_DIST)
 EXTRA_DIST += $(IMMER_DIST)
 
 
-config/pigeon-config.h: config/stamp-h1
+config/pigeoncoin-config.h: config/stamp-h1
 	@$(MAKE) -C $(top_builddir) $(subdir)/$(@)
-config/stamp-h1: $(top_srcdir)/$(subdir)/config/pigeon-config.h.in $(top_builddir)/config.status
+config/stamp-h1: $(top_srcdir)/$(subdir)/config/pigeoncoin-config.h.in $(top_builddir)/config.status
 	$(AM_V_at)$(MAKE) -C $(top_builddir) $(subdir)/$(@)
-$(top_srcdir)/$(subdir)/config/pigeon-config.h.in:  $(am__configure_deps)
-	$(AM_V_at)$(MAKE) -C $(top_srcdir) $(subdir)/config/pigeon-config.h.in
+$(top_srcdir)/$(subdir)/config/pigeoncoin-config.h.in:  $(am__configure_deps)
+	$(AM_V_at)$(MAKE) -C $(top_srcdir) $(subdir)/config/pigeoncoin-config.h.in
 
 
 clean-local:

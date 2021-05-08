@@ -1,0 +1,25 @@
+<!DOCTYPE RCC><RCC version="1.0">
+    <qresource prefix="/translations">
+        <file alias="ar">locale/pigeoncoin_ar.qm</file>
+        <file alias="bg">locale/pigeoncoin_bg.qm</file>
+        <file alias="de">locale/pigeoncoin_de.qm</file>
+        <file alias="en">locale/pigeoncoin_en.qm</file>
+        <file alias="es">locale/pigeoncoin_es.qm</file>
+        <file alias="fi">locale/pigeoncoin_fi.qm</file>
+        <file alias="fr">locale/pigeoncoin_fr.qm</file>
+        <file alias="it">locale/pigeoncoin_it.qm</file>
+        <file alias="ja">locale/pigeoncoin_ja.qm</file>
+        <file alias="ko">locale/pigeoncoin_ko.qm</file>
+        <file alias="nl">locale/pigeoncoin_nl.qm</file>
+        <file alias="pl">locale/pigeoncoin_pl.qm</file>
+        <file alias="pt">locale/pigeoncoin_pt.qm</file>
+        <file alias="ro">locale/pigeoncoin_ro.qm</file>
+        <file alias="ru">locale/pigeoncoin_ru.qm</file>
+        <file alias="sk">locale/pigeoncoin_sk.qm</file>
+        <file alias="th">locale/pigeoncoin_th.qm</file>
+        <file alias="tr">locale/pigeoncoin_tr.qm</file>
+        <file alias="vi">locale/pigeoncoin_vi.qm</file>
+        <file alias="zh_CN">locale/pigeoncoin_zh_CN.qm</file>
+        <file alias="zh_TW">locale/pigeoncoin_zh_TW.qm</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,6 @@
+usr/local/bin/pigeoncoin-qt usr/bin
+share/pixmaps/pigeoncoin32.xpm usr/share/pixmaps
+share/pixmaps/pigeoncoin16.xpm usr/share/pixmaps
+share/pixmaps/pigeoncoin128.png usr/share/pixmaps
+debian/pigeoncoin-qt.desktop usr/share/applications
+debian/pigeoncoin-qt.protocol usr/share/kde4/services/

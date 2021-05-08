@@ -129,7 +129,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../pigeon.qrc"/>
+  <include location="../pigeoncoin.qrc"/>
  </resources>
  <connections>
   <connection>

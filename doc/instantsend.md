@@ -11,9 +11,9 @@ When a "Transaction Lock" occurs the hash of the related transaction is broadcas
 * `zmqpubrawtxlock`: publishes the raw transaction when locked via InstantSend
 * `zmqpubhashtxlock`: publishes the transaction hash when locked via InstantSend
 
-This mechanism has been integrated into Bitcore-Node-Pigeon which allows for notification to be broadcast through Insight API in one of two ways:
-* WebSocket: [https://github.com/pigeonpro/insight-api-pigeon#web-socket-api](https://github.com/pigeonpro/insight-api-pigeon#web-socket-api)
-* API: [https://github.com/pigeonpro/insight-api-pigeon#instantsend-transactions](https://github.com/pigeonpro/insight-api-pigeon#instantsend-transactions)
+This mechanism has been integrated into Bitcore-Node-Pigeoncoin which allows for notification to be broadcast through Insight API in one of two ways:
+* WebSocket: [https://github.com/pigeoncoin/insight-api-pigeoncoin#web-socket-api](https://github.com/pigeoncoin/insight-api-pigeoncoin#web-socket-api)
+* API: [https://github.com/pigeoncoin/insight-api-pigeoncoin#instantsend-transactions](https://github.com/pigeoncoin/insight-api-pigeoncoin#instantsend-transactions)
 
 #### Command line option
 

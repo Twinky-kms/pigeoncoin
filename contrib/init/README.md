@@ -1,11 +1,11 @@
 Sample configuration files for:
 ```
-SystemD: pigeond.service
-Upstart: pigeond.conf
-OpenRC:  pigeond.openrc
-         pigeond.openrcconf
-CentOS:  pigeond.init
-OS X:    org.pigeon.pigeond.plist
+SystemD: pigeoncoind.service
+Upstart: pigeoncoind.conf
+OpenRC:  pigeoncoind.openrc
+         pigeoncoind.openrcconf
+CentOS:  pigeoncoind.init
+OS X:    org.pigeoncoin.pigeoncoind.plist
 ```
 have been made available to assist packagers in creating node packages here.
 

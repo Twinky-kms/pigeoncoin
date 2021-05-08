@@ -10,10 +10,10 @@
 
 /**
  * Name of client reported in the 'version' message. Report the same name
- * for both pigeond and pigeon-qt, to make it harder for attackers to
+ * for both pigeoncoind and pigeoncoin-qt, to make it harder for attackers to
  * target servers or GUI users specifically.
  */
-const std::string CLIENT_NAME("Pigeon Core");
+const std::string CLIENT_NAME("Pigeoncoin Core");
 
 /**
  * Client version number

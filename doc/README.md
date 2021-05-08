@@ -1,39 +1,39 @@
-Pigeon Core
+Pigeoncoin Core
 ==========
 
-This is the official reference wallet for Pigeon digital currency and comprises the backbone of the Pigeon peer-to-peer network. You can [download Pigeon Core](https://www.pigeon.org/downloads/) or [build it yourself](#building) using the guides below.
+This is the official reference wallet for Pigeoncoin digital currency and comprises the backbone of the Pigeoncoin peer-to-peer network. You can [download Pigeoncoin Core](https://www.pigeoncoin.org/downloads/) or [build it yourself](#building) using the guides below.
 
 Running
 ---------------------
-The following are some helpful notes on how to run Pigeon on your native platform.
+The following are some helpful notes on how to run Pigeoncoin on your native platform.
 
 ### Unix
 
 Unpack the files into a directory and run:
 
-- `bin/pigeon-qt` (GUI) or
-- `bin/pigeond` (headless)
+- `bin/pigeoncoin-qt` (GUI) or
+- `bin/pigeoncoind` (headless)
 
 ### Windows
 
-Unpack the files into a directory, and then run pigeon-qt.exe.
+Unpack the files into a directory, and then run pigeoncoin-qt.exe.
 
 ### OS X
 
-Drag Pigeon-Qt to your applications folder, and then run Pigeon-Qt.
+Drag Pigeoncoin-Qt to your applications folder, and then run Pigeoncoin-Qt.
 
 ### Need Help?
 
-* See the [Pigeon documentation](https://docs.pigeon.org)
+* See the [Pigeoncoin documentation](https://docs.pigeoncoin.org)
 for help and more information.
-* See the [Pigeon Developer Documentation](https://pigeon-docs.github.io/) 
+* See the [Pigeoncoin Developer Documentation](https://pigeoncoin-docs.github.io/) 
 for technical specifications and implementation details.
-* Ask for help on [Pigeon Nation Discord](http://pigeonchat.org)
-* Ask for help on the [Pigeon Forum](https://pigeon.org/forum)
+* Ask for help on [Pigeoncoin Nation Discord](http://pigeoncoinchat.org)
+* Ask for help on the [Pigeoncoin Forum](https://pigeoncoin.org/forum)
 
 Building
 ---------------------
-The following are developer notes on how to build Pigeon Core on your native platform. They are not complete guides, but include notes on the necessary libraries, compile flags, etc.
+The following are developer notes on how to build Pigeoncoin Core on your native platform. They are not complete guides, but include notes on the necessary libraries, compile flags, etc.
 
 - [OS X Build Notes](build-osx.md)
 - [Unix Build Notes](build-unix.md)
@@ -43,7 +43,7 @@ The following are developer notes on how to build Pigeon Core on your native pla
 
 Development
 ---------------------
-The Pigeon Core repo's [root README](/README.md) contains relevant information on the development process and automated testing.
+The Pigeoncoin Core repo's [root README](/README.md) contains relevant information on the development process and automated testing.
 
 - [Developer Notes](developer-notes.md)
 - [Release Notes](release-notes.md)
@@ -59,8 +59,8 @@ The Pigeon Core repo's [root README](/README.md) contains relevant information o
 - [Benchmarking](benchmarking.md)
 
 ### Resources
-* Discuss on the [Pigeon Forum](https://pigeon.org/forum), in the Development & Technical Discussion board.
-* Discuss on [Pigeon Nation Discord](http://pigeonchat.org)
+* Discuss on the [Pigeoncoin Forum](https://pigeoncoin.org/forum), in the Development & Technical Discussion board.
+* Discuss on [Pigeoncoin Nation Discord](http://pigeoncoinchat.org)
 
 ### Miscellaneous
 - [Assets Attribution](assets-attribution.md)

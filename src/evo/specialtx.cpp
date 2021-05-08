@@ -1,4 +1,5 @@
-// Copyright (c) 2018-2019 The Pigeon Core developers
+// Copyright (c) 2018-2019 The Dash Core developers
+// Copyright (c) 2020 The Pigeoncoin developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -22,7 +23,8 @@ bool CheckSpecialTx(const CTransaction& tx, const CBlockIndex* pindexPrev, CVali
     if (tx.nVersion != 3 || tx.nType == TRANSACTION_NORMAL)
         return true;
 
-    if (pindexPrev && pindexPrev->nHeight + 1 < Params().GetConsensus().DIP0003Height) {
+    if (!Params().GetConsensus().DIP0003Enabled) {
+    	std::cout << "fail to check DIP0003Enabled\n";
         return state.DoS(10, false, REJECT_INVALID, "bad-tx-type");
     }
 
@@ -98,9 +100,11 @@ bool ProcessSpecialTxsInBlock(const CBlock& block, const CBlockIndex* pindex, CV
     for (int i = 0; i < (int)block.vtx.size(); i++) {
         const CTransaction& tx = *block.vtx[i];
         if (!CheckSpecialTx(tx, pindex->pprev, state)) {
+        	std::cout << "fail to check CheckSpecialTx\n";
             return false;
         }
         if (!ProcessSpecialTx(tx, pindex, state)) {
+        	std::cout << "fail to check ProcessSpecialTx\n";
             return false;
         }
     }
@@ -109,6 +113,7 @@ bool ProcessSpecialTxsInBlock(const CBlock& block, const CBlockIndex* pindex, CV
     LogPrint(BCLog::BENCHMARK, "        - Loop: %.2fms [%.2fs]\n", 0.001 * (nTime2 - nTime1), nTimeLoop * 0.000001);
 
     if (!llmq::quorumBlockProcessor->ProcessBlock(block, pindex, state)) {
+    	std::cout << "fail to check llmq::quorumBlockProcessor->ProcessBlock\n";
         return false;
     }
 
@@ -116,6 +121,7 @@ bool ProcessSpecialTxsInBlock(const CBlock& block, const CBlockIndex* pindex, CV
     LogPrint(BCLog::BENCHMARK, "        - quorumBlockProcessor: %.2fms [%.2fs]\n", 0.001 * (nTime3 - nTime2), nTimeQuorum * 0.000001);
 
     if (!deterministicMNManager->ProcessBlock(block, pindex, state, fJustCheck)) {
+    	std::cout << "fail to check deterministicMNManager->ProcessBlock\n";
         return false;
     }
 
@@ -123,6 +129,7 @@ bool ProcessSpecialTxsInBlock(const CBlock& block, const CBlockIndex* pindex, CV
     LogPrint(BCLog::BENCHMARK, "        - deterministicMNManager: %.2fms [%.2fs]\n", 0.001 * (nTime4 - nTime3), nTimeDMN * 0.000001);
 
     if (fCheckCbTxMerleRoots && !CheckCbTxMerkleRoots(block, pindex, state)) {
+    	std::cout << "fail to check CheckCbTxMerkleRoots\n";
         return false;
     }
 

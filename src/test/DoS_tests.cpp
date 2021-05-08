@@ -14,7 +14,7 @@
 #include "util.h"
 #include "validation.h"
 
-#include "test/test_pigeon.h"
+#include "test/test_pigeoncoin.h"
 
 #include <stdint.h>
 

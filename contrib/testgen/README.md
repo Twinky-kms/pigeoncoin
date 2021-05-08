@@ -1,6 +1,6 @@
 ### TestGen ###
 
-Utilities to generate test vectors for the data-driven Pigeon tests.
+Utilities to generate test vectors for the data-driven Pigeoncoin tests.
 
 Usage: 
 

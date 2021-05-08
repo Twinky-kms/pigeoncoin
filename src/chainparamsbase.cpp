@@ -39,7 +39,7 @@ public:
 };
 
 /**
- * Testnet (T1)
+ * Testnet (vF1)
  */
 class CBaseTestNetParams : public CBaseChainParams
 {

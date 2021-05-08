@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-# Copyright (c) 2015-2020 The Pigeon Core developers
+# Copyright (c) 2015-2020 The Dash Core developers
+# Copyright (c) 2020 The Pigeoncoin developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 from test_framework.mininode import *
-from test_framework.test_framework import PigeonTestFramework
+from test_framework.test_framework import PigeoncoinTestFramework
 from test_framework.util import sync_blocks, set_node_times, \
     isolate_node, reconnect_isolated_node
 
@@ -18,10 +19,10 @@ Mempool inconsistencies are simulated via disconnecting/reconnecting node 3
 and by having a higher relay fee on nodes 4 and 5.
 '''
 
-class LLMQ_IS_RetroactiveSigning(PigeonTestFramework):
+class LLMQ_IS_RetroactiveSigning(PigeoncoinTestFramework):
     def set_test_params(self):
         # -whitelist is needed to avoid the trickling logic on node0
-        self.set_pigeon_test_params(6, 5, [["-whitelist=127.0.0.1"], [], [], [], ["-minrelaytxfee=0.001"], ["-minrelaytxfee=0.001"]], fast_dip3_enforcement=True)
+        self.set_pigeoncoin_test_params(6, 5, [["-whitelist=127.0.0.1"], [], [], [], ["-minrelaytxfee=0.001"], ["-minrelaytxfee=0.001"]], fast_dip3_enforcement=True)
 
     def run_test(self):
         while self.nodes[0].getblockchaininfo()["bip9_softforks"]["dip0008"]["status"] != "active":

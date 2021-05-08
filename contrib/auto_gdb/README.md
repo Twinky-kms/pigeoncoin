@@ -1,9 +1,9 @@
 # Contents
-This directory contains tools to automatically get data about the memory consumption by some objects in pigeond process with the help of GDB debugger.
+This directory contains tools to automatically get data about the memory consumption by some objects in pigeoncoind process with the help of GDB debugger.
 
-## pigeon_dbg.sh
-This shell script attaches GDB to the running pigeond process (should be built with debug info), executes debug.gdb script and detaches.
-By default it uses testnet settings, see script comments to attach it to mainnet pigeond.
+## pigeoncoin_dbg.sh
+This shell script attaches GDB to the running pigeoncoind process (should be built with debug info), executes debug.gdb script and detaches.
+By default it uses testnet settings, see script comments to attach it to mainnet pigeoncoind.
 
 ## debug.gdb
 Contains debugger instructions to execute during attach: loads python code and executes it for the objects we want to investigate.

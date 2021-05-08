@@ -1,9 +1,10 @@
-// Copyright (c) 2017-2020 The Pigeon Core developers
+// Copyright (c) 2017-2020 The Dash Core developers
+// Copyright (c) 2020 The Pigeoncoin developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef PIGEON_SIMPLIFIEDMNS_H
-#define PIGEON_SIMPLIFIEDMNS_H
+#ifndef PIGEONCOIN_SIMPLIFIEDMNS_H
+#define PIGEONCOIN_SIMPLIFIEDMNS_H
 
 #include "bls/bls.h"
 #include "merkleblock.h"
@@ -147,4 +148,4 @@ public:
 
 bool BuildSimplifiedMNListDiff(const uint256& baseBlockHash, const uint256& blockHash, CSimplifiedMNListDiff& mnListDiffRet, std::string& errorRet);
 
-#endif //PIGEON_SIMPLIFIEDMNS_H
+#endif //PIGEONCOIN_SIMPLIFIEDMNS_H

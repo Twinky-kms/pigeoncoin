@@ -1,6 +1,7 @@
 // Copyright (c) 2010 Satoshi Nakamoto
 // Copyright (c) 2009-2015 The Bitcoin Core developers
-// Copyright (c) 2014-2019 The Pigeon Core developers
+// Copyright (c) 2014-2019 The Dash Core developers
+// Copyright (c) 2020 The Pigeoncoin developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -38,7 +39,6 @@
 #include "llmq/quorums_instantsend.h"
 
 #include <stdint.h>
-
 #include <univalue.h>
 
 
@@ -148,7 +148,7 @@ UniValue getrawtransaction(const JSONRPCRequest& request)
             "         \"reqSigs\" : n,            (numeric) The required sigs\n"
             "         \"type\" : \"pubkeyhash\",  (string) The type, eg 'pubkeyhash'\n"
             "         \"addresses\" : [           (json array of string)\n"
-            "           \"address\"        (string) pigeon address\n"
+            "           \"address\"        (string) pigeoncoin address\n"
             "           ,...\n"
             "         ]\n"
             "       }\n"
@@ -364,7 +364,7 @@ UniValue createrawtransaction(const JSONRPCRequest& request)
             "     ]\n"
             "2. \"outputs\"               (object, required) a json object with outputs\n"
             "    {\n"
-            "      \"address\": x.xxx,    (numeric or string, required) The key is the pigeon address, the numeric value (can be string) is the " + CURRENCY_UNIT + " amount\n"
+            "      \"address\": x.xxx,    (numeric or string, required) The key is the pigeoncoin address, the numeric value (can be string) is the " + CURRENCY_UNIT + " amount\n"
             "      \"data\": \"hex\"      (string, required) The key is \"data\", the value is hex encoded data\n"
             "      ,...\n"
             "    }\n"
@@ -427,31 +427,58 @@ UniValue createrawtransaction(const JSONRPCRequest& request)
 
     std::set<CBitcoinAddress> setAddress;
     std::vector<std::string> addrList = sendTo.getKeys();
-    for (const std::string& name_ : addrList) {
+    UniValue redeemScripts(UniValue::VOBJ);
+	for (const std::string& name_ : addrList) {
 
-        if (name_ == "data") {
-            std::vector<unsigned char> data = ParseHexV(sendTo[name_].getValStr(),"Data");
+		if (name_ == "data") {
+			std::vector<unsigned char> data = ParseHexV(sendTo[name_].getValStr(),"Data");
 
-            CTxOut out(0, CScript() << OP_RETURN << data);
-            rawTx.vout.push_back(out);
-        } else {
-            CBitcoinAddress address(name_);
-            if (!address.IsValid())
-                throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, std::string("Invalid Pigeon address: ")+name_);
+			CTxOut out(0, CScript() << OP_RETURN << data);
+			rawTx.vout.push_back(out);
+		} else {
+			CBitcoinAddress address(name_);
+			if (!address.IsValid())
+				throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, std::string("Invalid Pigeoncoin address: ")+name_);
 
-            if (setAddress.count(address))
-                throw JSONRPCError(RPC_INVALID_PARAMETER, std::string("Invalid parameter, duplicated address: ")+name_);
-            setAddress.insert(address);
+			if (setAddress.count(address))
+				throw JSONRPCError(RPC_INVALID_PARAMETER, std::string("Invalid parameter, duplicated address: ")+name_);
+			setAddress.insert(address);
+			UniValue sendToValue = sendTo[name_];
+			CScript scriptPubKey;
+			CScript redeemScript;
 
-            CScript scriptPubKey = GetScriptForDestination(address.Get());
-            CAmount nAmount = AmountFromValue(sendTo[name_]);
-
-            CTxOut out(nAmount, scriptPubKey);
-            rawTx.vout.push_back(out);
-        }
-    }
-
-    return EncodeHexTx(rawTx);
+			CAmount nAmount;
+			if(sendToValue.isObject()) {
+				scriptPubKey.clear();
+				if(sendToValue["future_block"].isNull()) {
+					throw JSONRPCError(RPC_INVALID_PARAMETER, std::string("no future_block is specified "));
+				}
+				if(sendToValue["amount"].isNull()) {
+					throw JSONRPCError(RPC_INVALID_PARAMETER, std::string("no amount is specified "));
+				}
+				uint32_t sequence = sendToValue["future_block"].get_int();
+				redeemScript = GetFutureScriptForDestination(address.Get(), sequence);
+				scriptPubKey = GetScriptForDestination(CScriptID(redeemScript));
+				//cout << sendToValue["amount"].get_str() << "\n";
+//				scriptPubKey = GetFutureScriptForDestination(address.Get(), sequence);
+				nAmount = AmountFromValue(sendToValue["amount"]);
+				//redeemScripts.push_back(Pair(name_, EncodeHexScript(redeemScript)));
+			} else {
+				scriptPubKey = GetScriptForDestination(address.Get());
+				nAmount = AmountFromValue(sendTo[name_]);
+			}
+			CTxOut out(nAmount, scriptPubKey);
+			rawTx.vout.push_back(out);
+		}
+	}
+	std::string rawHexTx = EncodeHexTx(rawTx);
+	if(redeemScripts.size() > 0) {
+		UniValue rawTxObj(UniValue::VOBJ);
+		rawTxObj.push_back(Pair("rawTx", rawHexTx));
+		rawTxObj.push_back(Pair("redeemScripts", redeemScripts));
+		return rawTxObj;
+	}
+	return rawHexTx;
 }
 
 UniValue decoderawtransaction(const JSONRPCRequest& request)
@@ -493,7 +520,7 @@ UniValue decoderawtransaction(const JSONRPCRequest& request)
             "         \"reqSigs\" : n,            (numeric) The required sigs\n"
             "         \"type\" : \"pubkeyhash\",  (string) The type, eg 'pubkeyhash'\n"
             "         \"addresses\" : [           (json array of string)\n"
-            "           \"XwnLY9Tf7Zsef8gMGL2fhWA9ZmMjt4KPwG\"   (string) Pigeon address\n"
+            "           \"XwnLY9Tf7Zsef8gMGL2fhWA9ZmMjt4KPwG\"   (string) Pigeoncoin address\n"
             "           ,...\n"
             "         ]\n"
             "       }\n"
@@ -538,7 +565,7 @@ UniValue decodescript(const JSONRPCRequest& request)
             "  \"type\":\"type\", (string) The output type\n"
             "  \"reqSigs\": n,    (numeric) The required signatures\n"
             "  \"addresses\": [   (json array of string)\n"
-            "     \"address\"     (string) pigeon address\n"
+            "     \"address\"     (string) pigeoncoin address\n"
             "     ,...\n"
             "  ],\n"
             "  \"p2sh\",\"address\" (string) address of P2SH script wrapping this redeem script (not returned if the script is already a P2SH).\n"

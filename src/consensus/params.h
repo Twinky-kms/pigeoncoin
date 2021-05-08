@@ -7,20 +7,17 @@
 #define BITCOIN_CONSENSUS_PARAMS_H
 
 #include "uint256.h"
+#include "founder_payment.h"
+#include "masternode/masternode-collaterals.h"
 #include <map>
 #include <string>
-#include "founderpayment.h"
 
 namespace Consensus {
 
 enum DeploymentPos
 {
     DEPLOYMENT_TESTDUMMY,
-    DEPLOYMENT_CSV, // Deployment of BIP68, BIP112, and BIP113.
-    DEPLOYMENT_DIP0001, // Deployment of DIP0001 and lower transaction fees.
-    DEPLOYMENT_BIP147, // Deployment of BIP147 (NULLDUMMY)
-    DEPLOYMENT_DIP0003, // Deployment of DIP0002 and DIP0003 (txv3 and deterministic MN lists)
-    DEPLOYMENT_DIP0008, // Deployment of ChainLock enforcement
+
     // NOTE: Also add new deployments to VersionBitsDeploymentInfo in versionbits.cpp
     MAX_VERSION_BITS_DEPLOYMENTS
 };
@@ -48,13 +45,17 @@ enum LLMQType : uint8_t
     LLMQ_50_60 = 1, // 50 members, 30 (60%) threshold, one per hour
     LLMQ_400_60 = 2, // 400 members, 240 (60%) threshold, one every 12 hours
     LLMQ_400_85 = 3, // 400 members, 340 (85%) threshold, one every 24 hours
+	// these are LLMQ set when network still young
+//	LLMQ_10_60 = 4, // 10 members, 6 (60%) threshold, one per hour
+//	LLMQ_40_60 = 5, // 40 members, 24 (60%) threshold, one every 12 hours
+//	LLMQ_40_85 = 6, // 40 members, 34 (85%) threshold, one every 24 hours
 
     // for testing only
     LLMQ_5_60 = 100, // 5 members, 3 (60%) threshold, one per hour
 };
 
 // Configures a LLMQ and its DKG
-// See https://github.com/pigeonpro/dips/blob/master/dip-0006.md for more details
+// See https://github.com/pigeoncoin/dips/blob/master/dip-0006.md for more details
 struct LLMQParams {
     LLMQType type;
 
@@ -135,22 +136,21 @@ struct Params {
     int nGovernanceMinQuorum; // Min absolute vote count to trigger an action
     int nGovernanceFilterElements;
     int nMasternodeMinimumConfirmations;
+    bool BIPCSVEnabled;
+    bool BIP147Enabled;
     /** Block height and hash at which BIP34 becomes active */
-    int BIP34Height;
-    uint256 BIP34Hash;
+    bool BIP34Enabled;
     /** Block height at which BIP65 becomes active */
-    int BIP65Height;
+    bool BIP65Enabled;
     /** Block height at which BIP66 becomes active */
-    int BIP66Height;
+    bool BIP66Enabled;
     /** Block height at which DIP0001 becomes active */
-    int DIP0001Height;
+    bool DIP0001Enabled;
     /** Block height at which DIP0003 becomes active */
-    int DIP0003Height;
+    bool DIP0003Enabled;
+    bool DIP0008Enabled;
     /** Block height at which DIP0003 becomes enforced */
-    int DIP0003EnforcementHeight;
-    uint256 DIP0003EnforcementHash;
-    // Block height at which LWMA difficulty adjustment method becomes active
-    int zawyLWMAHeight;
+    //int DIP0003EnforcementHeight;
     /**
      * Minimum blocks including miner confirmation of the total of nMinerConfirmationWindow blocks in a retargeting period,
      * (nPowTargetTimespan / nPowTargetSpacing) which is also used for BIP9 deployments.
@@ -167,6 +167,7 @@ struct Params {
     bool fPowNoRetargeting;
     int64_t nPowTargetSpacing;
     int64_t nPowTargetTimespan;
+    int DGWBlocksAvg;
     int64_t DifficultyAdjustmentInterval() const { return nPowTargetTimespan / nPowTargetSpacing; }
     uint256 nMinimumChainWork;
     uint256 defaultAssumeValid;
@@ -200,6 +201,11 @@ struct Params {
     std::map<LLMQType, LLMQParams> llmqs;
     LLMQType llmqTypeChainLocks;
     LLMQType llmqTypeInstantSend{LLMQ_NONE};
+
+    FounderPayment nFounderPayment;
+    MasternodeCollaterals nCollaterals;
+    int masternodePaymentFixedBlock;
+
 };
 } // namespace Consensus
 

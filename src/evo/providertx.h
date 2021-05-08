@@ -1,9 +1,10 @@
-// Copyright (c) 2018-2020 The Pigeon Core developers
+// Copyright (c) 2018-2020 The Dash Core developers
+// Copyright (c) 2020 The Pigeoncoin developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef PIGEON_PROVIDERTX_H
-#define PIGEON_PROVIDERTX_H
+#ifndef PIGEONCOIN_PROVIDERTX_H
+#define PIGEONCOIN_PROVIDERTX_H
 
 #include "bls/bls.h"
 #include "consensus/validation.h"
@@ -237,10 +238,31 @@ public:
     }
 };
 
+class CFutureTx {
+	static const uint16_t CURRENT_VERSION = 1;
+public:
+	uint16_t nVersion{CURRENT_VERSION};// message version
+	uint32_t maturity;
+	uint16_t lockOutputIndex;
+
+public:
+	ADD_SERIALIZE_METHODS;
+
+	template <typename Stream, typename Operation>
+	inline void SerializationOp(Stream& s, Operation ser_action)
+	{
+		READWRITE(nVersion);
+		READWRITE(maturity);
+		READWRITE(lockOutputIndex);
+
+	}
+
+};
+
 
 bool CheckProRegTx(const CTransaction& tx, const CBlockIndex* pindexPrev, CValidationState& state);
 bool CheckProUpServTx(const CTransaction& tx, const CBlockIndex* pindexPrev, CValidationState& state);
 bool CheckProUpRegTx(const CTransaction& tx, const CBlockIndex* pindexPrev, CValidationState& state);
 bool CheckProUpRevTx(const CTransaction& tx, const CBlockIndex* pindexPrev, CValidationState& state);
 
-#endif //PIGEON_PROVIDERTX_H
+#endif //PIGEONCOIN_PROVIDERTX_H

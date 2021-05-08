@@ -1,8 +1,8 @@
-Source: pigeon
+Source: pigeoncoin
 Section: utils
 Priority: optional
-Maintainer: Holger Schinzel <holger@pigeon.org>
-Uploaders: Holger Schinzel <holger@pigeon.org>
+Maintainer: Holger Schinzel <holger@pigeoncoin.org>
+Uploaders: Holger Schinzel <holger@pigeoncoin.org>
 Build-Depends: debhelper,
  devscripts,
  automake,
@@ -26,45 +26,45 @@ Build-Depends: debhelper,
  python,
  libzmq3-dev
 Standards-Version: 3.9.2
-Homepage: https://www.pigeon.org/
-Vcs-Git: git://github.com/pigeonpay/pigeon.git
-Vcs-Browser: https://github.com/pigeonpay/pigeon
+Homepage: https://www.pigeoncoin.org/
+Vcs-Git: git://github.com/pigeoncoin/pigeoncoin.git
+Vcs-Browser: https://github.com/pigeoncoin/pigeoncoin
 
-Package: pigeond
+Package: pigeoncoind
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: peer-to-peer network based digital currency - daemon
- Pigeon is an experimental new digital currency that enables instant, private
- payments to anyone, anywhere in the world. Pigeon uses peer-to-peer
+ Pigeoncoin is an experimental new digital currency that enables instant, private
+ payments to anyone, anywhere in the world. Pigeoncoin uses peer-to-peer
  technology to operate with no central authority: managing transactions
- and issuing money are carried out collectively by the network. Pigeon Core
+ and issuing money are carried out collectively by the network. Pigeoncoin Core
  is the name of the open source software which enables the use of this currency.
  .
- This package provides the daemon, pigeond, and the CLI tool
- pigeon-cli to interact with the daemon.
+ This package provides the daemon, pigeoncoind, and the CLI tool
+ pigeoncoin-cli to interact with the daemon.
 
-Package: pigeon-qt
+Package: pigeoncoin-qt
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: peer-to-peer network based digital currency - Qt GUI
- Pigeon is an experimental new digital currency that enables instant, private
- payments to anyone, anywhere in the world. Pigeon uses peer-to-peer
+ Pigeoncoin is an experimental new digital currency that enables instant, private
+ payments to anyone, anywhere in the world. Pigeoncoin uses peer-to-peer
  technology to operate with no central authority: managing transactions
- and issuing money are carried out collectively by the network. Pigeon Core
+ and issuing money are carried out collectively by the network. Pigeoncoin Core
  is the name of the open source software which enables the use of this currency.
  .
- This package provides Pigeon-Qt, a GUI for Pigeon based on Qt.
+ This package provides Pigeoncoin-Qt, a GUI for Pigeoncoin based on Qt.
 
-Package: pigeon-tx
+Package: pigeoncoin-tx
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: peer-to-peer digital currency - standalone transaction tool
- Pigeon is an experimental new digital currency that enables instant, private
- payments to anyone, anywhere in the world. Pigeon uses peer-to-peer
+ Pigeoncoin is an experimental new digital currency that enables instant, private
+ payments to anyone, anywhere in the world. Pigeoncoin uses peer-to-peer
  technology to operate with no central authority: managing transactions
- and issuing money are carried out collectively by the network. Pigeon Core
+ and issuing money are carried out collectively by the network. Pigeoncoin Core
  is the name of the open source software which enables the use of this currency.
  .
- This package provides pigeon-tx, a command-line transaction creation
- tool which can be used without a pigeon daemon.  Some means of
+ This package provides pigeoncoin-tx, a command-line transaction creation
+ tool which can be used without a pigeoncoin daemon.  Some means of
  exchanging minimal transaction data with peers is still required.

@@ -1,9 +1,10 @@
-// Copyright (c) 2019-2020 The Pigeon Core developers
+// Copyright (c) 2019-2020 The Dash Core developers
+// Copyright (c) 2020 The Pigeoncoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef PIGEON_QUORUMS_CHAINLOCKS_H
-#define PIGEON_QUORUMS_CHAINLOCKS_H
+#ifndef PIGEONCOIN_QUORUMS_CHAINLOCKS_H
+#define PIGEONCOIN_QUORUMS_CHAINLOCKS_H
 
 #include "llmq/quorums.h"
 #include "llmq/quorums_signing.h"
@@ -122,4 +123,4 @@ extern CChainLocksHandler* chainLocksHandler;
 
 } // namespace llmq
 
-#endif //PIGEON_QUORUMS_CHAINLOCKS_H
+#endif //PIGEONCOIN_QUORUMS_CHAINLOCKS_H

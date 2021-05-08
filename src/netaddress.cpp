@@ -4,7 +4,7 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #ifdef HAVE_CONFIG_H
-#include "config/pigeon-config.h"
+#include "config/pigeoncoin-config.h"
 #endif
 
 #include "netaddress.h"

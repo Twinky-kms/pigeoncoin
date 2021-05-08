@@ -4,7 +4,7 @@
 
 #include "hash.h"
 #include "utilstrencodings.h"
-#include "test/test_pigeon.h"
+#include "test/test_pigeoncoin.h"
 
 #include <vector>
 

@@ -1,11 +1,12 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2015 The Bitcoin Core developers
-// Copyright (c) 2014-2019 The Pigeon Core developers
+// Copyright (c) 2014-2019 The Dash Core developers
+// Copyright (c) 2020 The Pigeoncoin developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #if defined(HAVE_CONFIG_H)
-#include "config/pigeon-config.h"
+#include "config/pigeoncoin-config.h"
 #endif
 
 #include "util.h"
@@ -95,7 +96,7 @@
 // Application startup time (used for uptime calculation)
 const int64_t nStartupTime = GetTime();
 
-//Pigeon only features
+//Pigeoncoin only features
 bool fMasternodeMode = false;
 bool fLiteMode = false;
 /**
@@ -107,8 +108,8 @@ bool fLiteMode = false;
 */
 int nWalletBackups = 10;
 
-const char * const BITCOIN_CONF_FILENAME = "pigeon.conf";
-const char * const BITCOIN_PID_FILENAME = "pigeond.pid";
+const char * const BITCOIN_CONF_FILENAME = "pigeoncoin.conf";
+const char * const BITCOIN_PID_FILENAME = "pigeoncoind.pid";
 
 ArgsManager gArgs;
 bool fPrintToConsole = false;
@@ -265,7 +266,7 @@ const CLogCategoryDesc LogCategories[] =
     {BCLog::ALL, "1"},
     {BCLog::ALL, "all"},
 
-    //Start Pigeon
+    //Start Pigeoncoin
     {BCLog::CHAINLOCKS, "chainlocks"},
     {BCLog::GOBJECT, "gobject"},
     {BCLog::INSTANTSEND, "instantsend"},
@@ -277,7 +278,7 @@ const CLogCategoryDesc LogCategories[] =
     {BCLog::MNSYNC, "mnsync"},
     {BCLog::PRIVATESEND, "privatesend"},
     {BCLog::SPORK, "spork"},
-    //End Pigeon
+    //End Pigeoncoin
 
 };
 
@@ -288,7 +289,7 @@ bool GetLogCategory(uint64_t *f, const std::string *str)
             *f = BCLog::ALL;
             return true;
         }
-        if (*str == "pigeon") {
+        if (*str == "pigeoncoin") {
             *f = BCLog::CHAINLOCKS
                 | BCLog::GOBJECT
                 | BCLog::INSTANTSEND
@@ -617,13 +618,13 @@ void PrintExceptionContinue(const std::exception_ptr pex, const char* pszThread)
 
 fs::path GetDefaultDataDir()
 {
-    // Windows < Vista: C:\Documents and Settings\Username\Application Data\PigeonCore
-    // Windows >= Vista: C:\Users\Username\AppData\Roaming\PigeonCore
-    // Mac: ~/Library/Application Support/PigeonCore
-    // Unix: ~/.pigeoncore
+    // Windows < Vista: C:\Documents and Settings\Username\Application Data\PigeoncoinCore
+    // Windows >= Vista: C:\Users\Username\AppData\Roaming\PigeoncoinCore
+    // Mac: ~/Library/Application Support/PigeoncoinCore
+    // Unix: ~/.pigeoncoincore
 #ifdef WIN32
     // Windows
-    return GetSpecialFolderPath(CSIDL_APPDATA) / "PigeonCore";
+    return GetSpecialFolderPath(CSIDL_APPDATA) / "PigeoncoinCore";
 #else
     fs::path pathRet;
     char* pszHome = getenv("HOME");
@@ -633,10 +634,10 @@ fs::path GetDefaultDataDir()
         pathRet = fs::path(pszHome);
 #ifdef MAC_OSX
     // Mac
-    return pathRet / "Library/Application Support/PigeonCore";
+    return pathRet / "Library/Application Support/PigeoncoinCore";
 #else
     // Unix
-    return pathRet / ".pigeoncore";
+    return pathRet / ".pigeoncoincore";
 #endif
 #endif
 }
@@ -703,7 +704,7 @@ void ArgsManager::ReadConfigFile(const std::string& confPath)
 {
     fs::ifstream streamConfig(GetConfigFile(confPath));
     if (!streamConfig.good()){
-        // Create empty pigeon.conf if it does not excist
+        // Create empty pigeoncoin.conf if it does not excist
         FILE* configFile = fopen(GetConfigFile(confPath).string().c_str(), "a");
         if (configFile != nullptr)
             fclose(configFile);
@@ -717,7 +718,7 @@ void ArgsManager::ReadConfigFile(const std::string& confPath)
 
         for (boost::program_options::detail::config_file_iterator it(streamConfig, setOptions), end; it != end; ++it)
         {
-            // Don't overwrite existing settings so command line settings override pigeon.conf
+            // Don't overwrite existing settings so command line settings override pigeoncoin.conf
             std::string strKey = std::string("-") + it->string_key;
             std::string strValue = it->value[0];
             InterpretNegativeSetting(strKey, strValue);
@@ -1045,10 +1046,11 @@ int GetNumCores()
 
 std::string CopyrightHolders(const std::string& strPrefix, unsigned int nStartYear, unsigned int nEndYear)
 {
-    std::string strCopyrightHolders = strPrefix + strprintf(" %u-%u ", nStartYear, nEndYear) + strprintf(_(COPYRIGHT_HOLDERS), _(COPYRIGHT_HOLDERS_SUBSTITUTION));
+    std::string strCopyrightHolders = strPrefix + strprintf(" %u ", nEndYear) + strprintf(_(COPYRIGHT_HOLDERS), _(COPYRIGHT_HOLDERS_SUBSTITUTION));
 
     // Check for untranslated substitution to make sure Bitcoin Core copyright is not removed by accident
     if (strprintf(COPYRIGHT_HOLDERS, COPYRIGHT_HOLDERS_SUBSTITUTION).find("Bitcoin Core") == std::string::npos) {
+    	strCopyrightHolders += "\n" + strPrefix + strprintf(" %u-%u ", 2014, nEndYear) + "The Dash Core developers";
         strCopyrightHolders += "\n" + strPrefix + strprintf(" %u-%u ", 2009, nEndYear) + "The Bitcoin Core developers";
     }
     return strCopyrightHolders;
@@ -1107,4 +1109,17 @@ std::string SafeIntVersionToString(uint32_t nVersion)
 int64_t GetStartupTime()
 {
     return nStartupTime;
+}
+
+void SetThreadPriority(int nPriority)
+{
+#ifdef WIN32
+    SetThreadPriority(GetCurrentThread(), nPriority);
+#else // WIN32
+#ifdef PRIO_THREAD
+    setpriority(PRIO_THREAD, 0, nPriority);
+#else // PRIO_THREAD
+    setpriority(PRIO_PROCESS, 0, nPriority);
+#endif // PRIO_THREAD
+#endif // WIN32
 }

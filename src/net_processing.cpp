@@ -56,7 +56,7 @@
 #include "llmq/quorums_signing_shares.h"
 
 #if defined(NDEBUG)
-# error "Dashcannot be compiled without assertions."
+# error "Pigeoncoin Core cannot be compiled without assertions."
 #endif
 
 std::atomic<int64_t> nTimeBestReceived(0); // Used only to inform the wallet of when we last received a block
@@ -1056,7 +1056,7 @@ bool static AlreadyHave(const CInv& inv) EXCLUSIVE_LOCKS_REQUIRED(cs_main)
         return mapBlockIndex.count(inv.hash);
 
     /*
-        Dash RDashentory Messages
+        Pigeoncoin Related Inventory Messages
 
         --
 
@@ -1830,13 +1830,14 @@ bool static ProcessMessage(CNode* pfrom, const std::string& strCommand, CDataStr
             pfrom->fDisconnect = true;
             return false;
         }
-
-        if (nVersion < MIN_PEER_PROTO_VERSION)
+        int nHeight = chainActive.Tip() == nullptr ? 0 : chainActive.Tip()->nHeight;
+        int minVersion = nHeight < chainparams.GetConsensus().masternodePaymentFixedBlock ? MIN_PEER_PROTO_VERSION : NEW_MIN_PEER_PROTO_VERSION;
+        if (nVersion < minVersion)
         {
             // disconnect from peers older than this proto version
             LogPrintf("peer=%d using obsolete version %i; disconnecting\n", pfrom->GetId(), nVersion);
             connman->PushMessage(pfrom, CNetMsgMaker(INIT_PROTO_VERSION).Make(NetMsgType::REJECT, strCommand, REJECT_OBSOLETE,
-                               strprintf("Version must be %d or greater", MIN_PEER_PROTO_VERSION)));
+                               strprintf("Version must be %d or greater", minVersion)));
             pfrom->fDisconnect = true;
             return false;
         }
@@ -2471,6 +2472,7 @@ bool static ProcessMessage(CNode* pfrom, const std::string& strCommand, CDataStr
             // It could be that a MN is no longer in the list but its DSTX is not yet mined.
             // Try to find a MN up to 24 blocks deep to make sure such dstx-es are relayed and processed correctly.
             for (int i = 0; i < 24 && pindex; ++i) {
+
                 dmn = deterministicMNManager->GetListForBlock(pindex).GetMNByCollateral(dstx.masternodeOutpoint);
                 if (dmn) break;
                 pindex = pindex->pprev;

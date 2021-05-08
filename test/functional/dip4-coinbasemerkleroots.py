@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-# Copyright (c) 2015-2020 The Pigeon Core developers
+# Copyright (c) 2015-2020 The Dash Core developers
+# Copyright (c) 2020 The Pigeoncoin developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 from collections import namedtuple
 
 from test_framework.mininode import *
-from test_framework.test_framework import PigeonTestFramework
+from test_framework.test_framework import PigeoncoinTestFramework
 from test_framework.util import p2p_port, assert_equal, sync_blocks, set_node_times
 
 '''
@@ -36,9 +37,9 @@ class TestNode(NodeConnCB):
         return self.last_mnlistdiff
 
 
-class LLMQCoinbaseCommitmentsTest(PigeonTestFramework):
+class LLMQCoinbaseCommitmentsTest(PigeoncoinTestFramework):
     def set_test_params(self):
-        self.set_pigeon_test_params(6, 5, fast_dip3_enforcement=True)
+        self.set_pigeoncoin_test_params(6, 5, fast_dip3_enforcement=True)
 
     def run_test(self):
         self.test_node = TestNode()
@@ -55,7 +56,7 @@ class LLMQCoinbaseCommitmentsTest(PigeonTestFramework):
         mnList = self.test_getmnlistdiff(null_hash, self.nodes[0].getbestblockhash(), {}, [], expectedUpdated)
         expectedUpdated2 = expectedUpdated + []
 
-        # Register one more MN, but don't start it (that would fail as PigeonTestFramework doesn't support this atm)
+        # Register one more MN, but don't start it (that would fail as PigeoncoinTestFramework doesn't support this atm)
         baseBlockHash = self.nodes[0].getbestblockhash()
         self.prepare_masternode(self.mn_count)
         new_mn = self.mninfo[self.mn_count]

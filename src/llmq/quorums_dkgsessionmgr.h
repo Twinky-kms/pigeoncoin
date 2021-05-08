@@ -1,9 +1,10 @@
-// Copyright (c) 2018-2019 The Pigeon Core developers
+// Copyright (c) 2018-2019 The Dash Core developers
+// Copyright (c) 2020 The Pigeoncoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef PIGEON_QUORUMS_DKGSESSIONMGR_H
-#define PIGEON_QUORUMS_DKGSESSIONMGR_H
+#ifndef PIGEONCOIN_QUORUMS_DKGSESSIONMGR_H
+#define PIGEONCOIN_QUORUMS_DKGSESSIONMGR_H
 
 #include "llmq/quorums_dkgsessionhandler.h"
 
@@ -76,4 +77,4 @@ extern CDKGSessionManager* quorumDKGSessionManager;
 
 } // namespace llmq
 
-#endif //PIGEON_QUORUMS_DKGSESSIONMGR_H
+#endif //PIGEONCOIN_QUORUMS_DKGSESSIONMGR_H

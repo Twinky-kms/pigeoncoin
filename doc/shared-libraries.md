@@ -1,21 +1,21 @@
 Shared Libraries
 ================
 
-## pigeonconsensus
+## pigeoncoinconsensus
 
-The purpose of this library is to make the verification functionality that is critical to Pigeon's consensus available to other applications, e.g. to language bindings.
+The purpose of this library is to make the verification functionality that is critical to Pigeoncoin's consensus available to other applications, e.g. to language bindings.
 
 ### API
 
-The interface is defined in the C header `pigeonconsensus.h` located in  `src/script/pigeonconsensus.h`.
+The interface is defined in the C header `pigeoncoinconsensus.h` located in  `src/script/pigeoncoinconsensus.h`.
 
 #### Version
 
-`pigeonconsensus_version` returns an `unsigned int` with the API version *(currently at an experimental `0`)*.
+`pigeoncoinconsensus_version` returns an `unsigned int` with the API version *(currently at an experimental `0`)*.
 
 #### Script Validation
 
-`pigeonconsensus_verify_script` returns an `int` with the status of the verification. It will be `1` if the input script correctly spends the previous output `scriptPubKey`.
+`pigeoncoinconsensus_verify_script` returns an `int` with the status of the verification. It will be `1` if the input script correctly spends the previous output `scriptPubKey`.
 
 ##### Parameters
 - `const unsigned char *scriptPubKey` - The previous output script that encumbers spending.
@@ -24,21 +24,21 @@ The interface is defined in the C header `pigeonconsensus.h` located in  `src/sc
 - `unsigned int txToLen` - The number of bytes for the `txTo`.
 - `unsigned int nIn` - The index of the input in `txTo` that spends the `scriptPubKey`.
 - `unsigned int flags` - The script validation flags *(see below)*.
-- `pigeonconsensus_error* err` - Will have the error/success code for the operation *(see below)*.
+- `pigeoncoinconsensus_error* err` - Will have the error/success code for the operation *(see below)*.
 
 ##### Script Flags
-- `pigeonconsensus_SCRIPT_FLAGS_VERIFY_NONE`
-- `pigeonconsensus_SCRIPT_FLAGS_VERIFY_P2SH` - Evaluate P2SH ([BIP16](https://github.com/bitcoin/bips/blob/master/bip-0016.mediawiki)) subscripts
-- `pigeonconsensus_SCRIPT_FLAGS_VERIFY_DERSIG` - Enforce strict DER ([BIP66](https://github.com/bitcoin/bips/blob/master/bip-0066.mediawiki)) compliance
-- `pigeonconsensus_SCRIPT_FLAGS_VERIFY_NULLDUMMY` - Enforce NULLDUMMY ([BIP147](https://github.com/bitcoin/bips/blob/master/bip-0147.mediawiki))
-- `pigeonconsensus_SCRIPT_FLAGS_VERIFY_CHECKLOCKTIMEVERIFY` - Enable CHECKLOCKTIMEVERIFY ([BIP65](https://github.com/bitcoin/bips/blob/master/bip-0065.mediawiki))
-- `pigeonconsensus_SCRIPT_FLAGS_VERIFY_CHECKSEQUENCEVERIFY` - Enable CHECKSEQUENCEVERIFY ([BIP112](https://github.com/bitcoin/bips/blob/master/bip-0112.mediawiki))
+- `pigeoncoinconsensus_SCRIPT_FLAGS_VERIFY_NONE`
+- `pigeoncoinconsensus_SCRIPT_FLAGS_VERIFY_P2SH` - Evaluate P2SH ([BIP16](https://github.com/bitcoin/bips/blob/master/bip-0016.mediawiki)) subscripts
+- `pigeoncoinconsensus_SCRIPT_FLAGS_VERIFY_DERSIG` - Enforce strict DER ([BIP66](https://github.com/bitcoin/bips/blob/master/bip-0066.mediawiki)) compliance
+- `pigeoncoinconsensus_SCRIPT_FLAGS_VERIFY_NULLDUMMY` - Enforce NULLDUMMY ([BIP147](https://github.com/bitcoin/bips/blob/master/bip-0147.mediawiki))
+- `pigeoncoinconsensus_SCRIPT_FLAGS_VERIFY_CHECKLOCKTIMEVERIFY` - Enable CHECKLOCKTIMEVERIFY ([BIP65](https://github.com/bitcoin/bips/blob/master/bip-0065.mediawiki))
+- `pigeoncoinconsensus_SCRIPT_FLAGS_VERIFY_CHECKSEQUENCEVERIFY` - Enable CHECKSEQUENCEVERIFY ([BIP112](https://github.com/bitcoin/bips/blob/master/bip-0112.mediawiki))
 
 ##### Errors
-- `pigeonconsensus_ERR_OK` - No errors with input parameters *(see the return value of `pigeonconsensus_verify_script` for the verification status)*
-- `pigeonconsensus_ERR_TX_INDEX` - An invalid index for `txTo`
-- `pigeonconsensus_ERR_TX_SIZE_MISMATCH` - `txToLen` did not match with the size of `txTo`
-- `pigeonconsensus_ERR_DESERIALIZE` - An error deserializing `txTo`
+- `pigeoncoinconsensus_ERR_OK` - No errors with input parameters *(see the return value of `pigeoncoinconsensus_verify_script` for the verification status)*
+- `pigeoncoinconsensus_ERR_TX_INDEX` - An invalid index for `txTo`
+- `pigeoncoinconsensus_ERR_TX_SIZE_MISMATCH` - `txToLen` did not match with the size of `txTo`
+- `pigeoncoinconsensus_ERR_DESERIALIZE` - An error deserializing `txTo`
 
 ### Example Implementations
 - [NBitcoin](https://github.com/NicolasDorier/NBitcoin/blob/master/NBitcoin/Script.cs#L814) (.NET Bindings)

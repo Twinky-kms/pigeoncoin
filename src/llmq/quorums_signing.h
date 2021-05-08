@@ -1,9 +1,10 @@
-// Copyright (c) 2018-2020 The Pigeon Core developers
+// Copyright (c) 2018-2020 The Dash Core developers
+// Copyright (c) 2020 The Pigeoncoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef PIGEON_QUORUMS_SIGNING_H
-#define PIGEON_QUORUMS_SIGNING_H
+#ifndef PIGEONCOIN_QUORUMS_SIGNING_H
+#define PIGEONCOIN_QUORUMS_SIGNING_H
 
 #include "llmq/quorums.h"
 
@@ -191,4 +192,4 @@ extern CSigningManager* quorumSigningManager;
 
 } // namespace llmq
 
-#endif //PIGEON_QUORUMS_SIGNING_H
+#endif //PIGEONCOIN_QUORUMS_SIGNING_H

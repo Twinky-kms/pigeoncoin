@@ -12,7 +12,7 @@
 #include "script/script_error.h"
 #include "script/sign.h"
 #include "script/ismine.h"
-#include "test/test_pigeon.h"
+#include "test/test_pigeoncoin.h"
 
 #include <vector>
 

@@ -21,8 +21,8 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef PIGEON_BIP39_H
-#define PIGEON_BIP39_H
+#ifndef PIGEONCOIN_BIP39_H
+#define PIGEONCOIN_BIP39_H
 
 #include "support/allocators/secure.h"
 

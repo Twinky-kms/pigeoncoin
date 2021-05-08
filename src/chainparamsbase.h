@@ -10,8 +10,8 @@
 #include <vector>
 
 /**
- * CBaseChainParams defines the base parameters (shared between pigeon-cli and pigeond)
- * of a given instance of the Pigeon system.
+ * CBaseChainParams defines the base parameters (shared between pigeoncoin-cli and pigeoncoind)
+ * of a given instance of the Pigeoncoin system.
  */
 class CBaseChainParams
 {

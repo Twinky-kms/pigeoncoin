@@ -137,7 +137,7 @@ public:
 };
 
 /**
- * Pigeon RPC command dispatcher.
+ * Pigeoncoin RPC command dispatcher.
  */
 class CRPCTable
 {
