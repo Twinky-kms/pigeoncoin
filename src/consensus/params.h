@@ -151,6 +151,8 @@ struct Params {
     bool DIP0008Enabled;
     /** Block height at which DIP0003 becomes enforced */
     //int DIP0003EnforcementHeight;
+    /** Block height at which LWMA difficulty adjustment method becomes active*/
+    int zawyLWMAHeight;
     /**
      * Minimum blocks including miner confirmation of the total of nMinerConfirmationWindow blocks in a retargeting period,
      * (nPowTargetTimespan / nPowTargetSpacing) which is also used for BIP9 deployments.
@@ -173,7 +175,6 @@ struct Params {
     uint256 defaultAssumeValid;
 
     int nPowDifficultyRetargetHeight;
-    FounderPayment nFounderPayment;
     int64_t nPowTargetTimespanShort;
     int masternodeCollateral;
     int nAfterExploitHeight;

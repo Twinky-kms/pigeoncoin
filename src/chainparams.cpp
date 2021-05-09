@@ -98,11 +98,11 @@ void CChainParams::UpdateVersionBitsParameters(Consensus::DeploymentPos d, int64
     }
 }
 
-void CChainParams::UpdateDIP3Parameters(int nActivationHeight, int nEnforcementHeight)
+/*void CChainParams::UpdateDIP3Parameters(int nActivationHeight, int nEnforcementHeight)
 {
     consensus.DIP0003Height = nActivationHeight;
     consensus.DIP0003EnforcementHeight = nEnforcementHeight;
-}
+}*/
 
 void CChainParams::UpdateBudgetParameters(int nMasternodePaymentsStartBlock, int nBudgetPaymentsStartBlock, int nSuperblockStartBlock)
 {
@@ -157,7 +157,7 @@ static void FindMainNetGenesisBlock(uint32_t nTime, uint32_t nBits, const char* 
     for (uint32_t nNonce = 0; nNonce < UINT32_MAX; nNonce++) {
         block.nNonce = nNonce;
 
-        uint256 hash = block.GetPOWHash();
+        uint256 hash = block.GetHash();
         if (nNonce % 48 == 0) {
         	printf("\nrnonce=%d, pow is %s\n", nNonce, hash.GetHex().c_str());
         }
@@ -398,7 +398,7 @@ public:
         consensus.DIP0001Enabled = false;
         consensus.DIP0003Enabled = false;
         consensus.DIP0008Enabled = false;
-        consensus.DIP0003EnforcementHeight = 3800000;
+        // consensus.DIP0003EnforcementHeight = 3800000;
         consensus.powLimit = uint256S("00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); // ~uint256(0) >> 20
         consensus.nPowTargetTimespan = 2016 * 60; // Pigeoncoin: 1 day
         consensus.nPowTargetSpacing = 1 * 60; // Pigeoncoin: 1 minutes
@@ -412,6 +412,7 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit = 28;
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nStartTime = 1199145601; // January 1, 2008
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nTimeout = 1230767999; // December 31, 2008
+        consensus.nAfterExploitHeight = 186803;
 
         // The best chain should have at least this much work.
         consensus.nMinimumChainWork = uint256S("0x0"); // 0
@@ -461,8 +462,7 @@ public:
         nExtCoinType = 5;
         vector<FounderRewardStructure> rewardStructures = {  {1420000, 5}// 5% founder/dev fee until 1,420,000
                                         										   };
-        consensus.nFounderPayment = FounderPayment(rewardStructures, 420000, "rQG3D3nzy3jfFxugbmUoZ9LhjpeJ4vrYbR",
-	    											"rLzD7RxVS1QMZ5yYrmoUvfnTNuzgUqJVVK", 738178);
+        consensus.nFounderPayment = FounderPayment(rewardStructures, 420000);
         consensus.nCollaterals = MasternodeCollaterals(
 			{
 				{88720, 600000 * COIN}
@@ -538,7 +538,7 @@ public:
         consensus.DIP0003Enabled = false;
         consensus.BIPCSVEnabled = false;
         consensus.BIP147Enabled = false;
-        consensus.DIP0003EnforcementHeight = 7300;
+        // consensus.DIP0003EnforcementHeight = 7300;
         consensus.powLimit = uint256S("00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); // ~uint256(0) >> 20
         consensus.nPowTargetTimespan = 2016 * 60; // Pigeoncoin: 1.4 days
         consensus.nPowTargetSpacing = 1 * 60; // Pigeoncoin: 1 minutes
@@ -590,15 +590,14 @@ public:
         nExtCoinType = 1;
 
         // long living quorum params
-        consensus.llmqs[Consensus::LLMQ_5_60] = llmq5_60;
-        consensus.llmqTypeChainLocks = Consensus::LLMQ_5_60;
-        consensus.llmqTypeInstantSend = Consensus::LLMQ_5_60;
+        consensus.llmqs[Consensus::LLMQ_50_60] = llmq50_60;
+        consensus.llmqTypeChainLocks = Consensus::LLMQ_50_60;
+        consensus.llmqTypeInstantSend = Consensus::LLMQ_50_60;
 
         vector<FounderRewardStructure> rewardStructures = {
                                                               {50, 5}
                                                           };
-		consensus.nFounderPayment = FounderPayment(rewardStructures, 3000, "n6yjcgyB6VUJipV9p361QTSCDs3gf8izEh",
-													"nLphepxwA1bNxLDuwB3SLYPXjed6jMwFw4", 4000);
+		consensus.nFounderPayment = FounderPayment(rewardStructures, 3000);
 
         consensus.nCollaterals = MasternodeCollaterals(
 			{
@@ -672,8 +671,6 @@ public:
         consensus.nPowTargetSpacing = 2.5 * 60; // Pigeoncoin: 2.5 minutes
         consensus.fPowAllowMinDifficultyBlocks = true;
         consensus.fPowNoRetargeting = false;
-        consensus.nPowDGWHeight = 60;
-		consensus.DGWBlocksAvg = 60;
         consensus.nRuleChangeActivationThreshold = 1512; // 75% for testchains
         consensus.nMinerConfirmationWindow = 2016; // nPowTargetTimespan / nPowTargetSpacing
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit = 28;
@@ -794,8 +791,6 @@ public:
         consensus.nPowTargetSpacing = 2.5 * 60; // Pigeoncoin: 2.5 minutes
         consensus.fPowAllowMinDifficultyBlocks = true;
         consensus.fPowNoRetargeting = true;
-        consensus.nPowDGWHeight = 60;
-		consensus.DGWBlocksAvg = 60;
         consensus.nRuleChangeActivationThreshold = 108; // 75% for testchains
         consensus.nMinerConfirmationWindow = 144; // Faster than normal for regtest (144 instead of 2016)
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit = 28;

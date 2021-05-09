@@ -381,13 +381,8 @@ libpigeoncoin_wallet_a_SOURCES = \
   wallet/walletdb.cpp \
   $(BITCOIN_CORE_H)
 
-# crypto primitives library
-crypto_libpigeoncoin_crypto_base_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_CONFIG_INCLUDES) $(PIC_FLAGS)
-crypto_libpigeoncoin_crypto_base_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS) $(PIC_FLAGS)
-crypto_libpigeoncoin_crypto_base_a_SOURCES = \
-
 # x21s
-crypto_libpigeon_crypto_base_a_SOURCES += \
+crypto_libpigeoncoin_crypto_base_a_SOURCES = \
 algo/sph_groestl.h \
   algo/sph_types.h \
   algo/sph_blake.h \
@@ -473,8 +468,6 @@ libpigeoncoin_consensus_a_SOURCES = \
   consensus/merkle.h \
   consensus/params.h \
   consensus/validation.h \
-  hash_selection.h \
-  hash_selection.cpp \
   hash.cpp \
   hash.h \
   prevector.h \
@@ -747,3 +740,4 @@ endif
 if ENABLE_QT_TESTS
 include Makefile.qttest.include
 endif
+
