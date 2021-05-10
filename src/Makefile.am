@@ -381,8 +381,35 @@ libpigeoncoin_wallet_a_SOURCES = \
   wallet/walletdb.cpp \
   $(BITCOIN_CORE_H)
 
-# x21s
+# crypto primitives library
+crypto_libpigeoncoin_crypto_base_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_CONFIG_INCLUDES) $(PIC_FLAGS)
+crypto_libpigeoncoin_crypto_base_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS) $(PIC_FLAGS)
 crypto_libpigeoncoin_crypto_base_a_SOURCES = \
+  crypto/aes.cpp \
+  crypto/aes.h \
+  crypto/chacha_poly_aead.h \
+  crypto/chacha_poly_aead.cpp \
+  crypto/chacha20.h \
+  crypto/chacha20.cpp \
+  crypto/common.h \
+  crypto/hmac_sha256.cpp \
+  crypto/hmac_sha256.h \
+  crypto/hmac_sha512.cpp \
+  crypto/hmac_sha512.h \
+  crypto/poly1305.h \
+  crypto/poly1305.cpp \
+  crypto/ripemd160.cpp \
+  crypto/aes_helper.c \
+  crypto/ripemd160.h \
+  crypto/sha1.cpp \
+  crypto/sha1.h \
+  crypto/sha256.cpp \
+  crypto/sha256.h \
+  crypto/sha512.cpp \
+  crypto/sha512.h
+
+# x21s
+crypto_libpigeoncoin_crypto_base_a_SOURCES += \
 algo/sph_groestl.h \
   algo/sph_types.h \
   algo/sph_blake.h \

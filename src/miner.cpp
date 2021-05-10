@@ -1,7 +1,6 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2015 The Bitcoin Core developers
-// Copyright (c) 2014-2019 The Dash Core developers
-// Copyright (c) 2020 The Raptoreum developers
+// Copyright (c) 2014-2019 The Pigeon Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -30,24 +29,23 @@
 #include "masternode/masternode-payments.h"
 #include "masternode/masternode-sync.h"
 #include "validationinterface.h"
-#include "wallet/wallet.h"
 
 #include "evo/specialtx.h"
 #include "evo/cbtx.h"
 #include "evo/simplifiedmns.h"
 #include "evo/deterministicmns.h"
+#include "founder_payment.h"
 
 #include "llmq/quorums_blockprocessor.h"
 #include "llmq/quorums_chainlocks.h"
 
-#include <boost/thread.hpp>
 #include <algorithm>
 #include <queue>
 #include <utility>
 
 //////////////////////////////////////////////////////////////////////////////
 //
-// RaptoreumMiner
+// PigeonMiner
 //
 
 //
@@ -58,10 +56,6 @@
 
 uint64_t nLastBlockTx = 0;
 uint64_t nLastBlockSize = 0;
-uint64_t nMiningTimeStart = 0;
-double nHashesPerSec = 0;
-uint64_t nHashesDone = 0;
-std::string alsoHashString;
 
 int64_t UpdateTime(CBlockHeader* pblock, const Consensus::Params& consensusParams, const CBlockIndex* pindexPrev)
 {
@@ -145,8 +139,8 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
     CBlockIndex* pindexPrev = chainActive.Tip();
     nHeight = pindexPrev->nHeight + 1;
 
-    bool fDIP0003Active_context = chainparams.GetConsensus().DIP0003Enabled;
-    bool fDIP0008Active_context = chainparams.GetConsensus().DIP0008Enabled;
+    bool fDIP0003Active_context = nHeight >= chainparams.GetConsensus().DIP0003Enabled;
+    bool fDIP0008Active_context = chainparams.GetConsensus().DIP0008Enabled; // VersionBitsState(chainActive.Tip(), chainparams.GetConsensus(), Consensus::DEPLOYMENT_DIP0008, versionbitscache) == THRESHOLD_ACTIVE;
 
     pblock->nVersion = ComputeBlockVersion(pindexPrev, chainparams.GetConsensus(), chainparams.BIP9CheckMasternodesUpgraded());
     // -regtest only: allow overriding block.nVersion with
@@ -206,7 +200,13 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
         coinbaseTx.nType = TRANSACTION_COINBASE;
 
         CCbTx cbTx;
-        cbTx.nVersion = 2;
+
+        if (fDIP0008Active_context) {
+            cbTx.nVersion = 2;
+        } else {
+            cbTx.nVersion = 1;
+        }
+
         cbTx.nHeight = nHeight;
 
         CValidationState state;
@@ -224,9 +224,13 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
 
     // Update coinbase transaction with additional info about masternode and governance payments,
     // get some info back to pass to getblocktemplate
-    FillBlockPayments(coinbaseTx, nHeight, blockReward, pblocktemplate->voutMasternodePayments, pblocktemplate->voutSuperblockPayments);
-    FounderPayment founderPayment = chainparams.GetConsensus().nFounderPayment;
-	founderPayment.FillFounderPayment(coinbaseTx, nHeight, blockReward, pblock->txoutFounder);
+    if(nHeight > chainparams.GetConsensus().nMasternodePaymentsStartBlock)
+        FillBlockPayments(coinbaseTx, nHeight, blockReward, pblocktemplate->voutMasternodePayments, pblocktemplate->voutSuperblockPayments);
+
+    //Fill founder payment
+    FounderPayment founderPayment = Params().GetConsensus().nFounderPayment;
+    founderPayment.FillFounderPayment(coinbaseTx, nHeight, blockReward, pblock->txoutFounder);
+    
     pblock->vtx[0] = MakeTransactionRef(std::move(coinbaseTx));
     pblocktemplate->vTxFees[0] = -nFees;
 
@@ -495,44 +499,6 @@ void BlockAssembler::addPackageTxs(int &nPackagesSelected, int &nDescendantsUpda
         // Update transactions that depend on each of these
         nDescendantsUpdated += UpdatePackagesForAdded(ancestors, mapModifiedTx);
     }
-}
-
-static bool ProcessBlockFound(const CBlock* pblock, const CChainParams& chainparams, uint256& hash)
-{
-    LogPrintf("%s\n", pblock->ToString());
-    LogPrintf("generated %s\n", FormatMoney(pblock->vtx[0]->vout[0].nValue));
-
-    // Found a solution
-    {
-        LOCK(cs_main);
-        if (pblock->hashPrevBlock != chainActive.Tip()->GetBlockHash())
-            return error("ProcessBlockFound -- generated block is stale");
-    }
-
-    // Inform about the new block
-    GetMainSignals().BlockFound(hash);
-
-    // Process this block the same as if we had received it from another node
-    //CValidationState state;
-    //std::shared_ptr<CBlock> shared_pblock = std::make_shared<CBlock>(pblock);
-    std::shared_ptr<const CBlock> shared_pblock = std::make_shared<const CBlock>(*pblock);
-    if (!ProcessNewBlock(chainparams, shared_pblock, true, nullptr))
-        return error("ProcessBlockFound -- ProcessNewBlock() failed, block not accepted");
-
-    return true;
-}
-
-CWallet *GetFirstWallet() {
-#ifdef ENABLE_WALLET
-    while(vpwallets.size() == 0){
-        MilliSleep(100);
-
-    }
-    if (vpwallets.size() == 0)
-        return(NULL);
-    return(vpwallets[0]);
-#endif
-    return(NULL);
 }
 
 void IncrementExtraNonce(CBlock* pblock, const CBlockIndex* pindexPrev, unsigned int& nExtraNonce)

@@ -1014,7 +1014,27 @@ NOTE:   unlike bitcoin we are using PREVIOUS block height here,
         might be a good idea to change this to use prev bits
         but current height to avoid confusion.
 */
+CAmount GetBlockSubsidy(int nPrevHeight, const Consensus::Params& consensusParams, bool fSuperblockPartOnly)
+{
+    double dDiff;
+
 CAmount nSubsidy = 5000 * COIN;
+
+// yearly decline of production by ~7.1% per year, projected ~18M coins max by year 2050+.
+    for (int i = consensusParams.nSubsidyHalvingInterval; i <= nPrevHeight; i += consensusParams.nSubsidyHalvingInterval) {
+        nSubsidy -= nSubsidy/14;
+    }
+
+    // this is only active on devnets
+    if (nPrevHeight < consensusParams.nHighSubsidyBlocks) {
+        nSubsidy *= consensusParams.nHighSubsidyFactor;
+    }
+
+    // Hard fork to reduce the block reward by 10 extra percent (allowing budget/superblocks)
+    CAmount nSuperblockPart = (nPrevHeight > consensusParams.nBudgetPaymentsStartBlock) ? nSubsidy/10 : 0;
+
+    return fSuperblockPartOnly ? nSuperblockPart : nSubsidy - nSuperblockPart;
+}
 
 CAmount GetMasternodePayment(int nHeight, CAmount blockValue)
 {
@@ -1756,6 +1776,23 @@ static int64_t nTimeConnect = 0;
 static int64_t nTimeIndex = 0;
 static int64_t nTimeCallbacks = 0;
 static int64_t nTimeTotal = 0;
+
+bool IsFounderPaymentValid(const CTransaction& coinbaseTX, const Consensus::Params& consensusParams,const int nHeight){
+    assert(coinbaseTX != CTransaction());
+    CAmount blockReward = GetBlockSubsidy(nHeight,consensusParams);
+    FounderPayment founderPayment = consensusParams.nFounderPayment;
+    CAmount founderAmt = founderPayment.getFounderPaymentAmount(nHeight, blockReward);
+    bool founderPaymentValid = true;// if founder reward is 0 no need to check
+    bool fCheckFounderPayment = founderPayment.shouldPayFounder(nHeight);
+    //Check for founder payment if it isnt already found in txes
+    if(fCheckFounderPayment)
+	    founderPaymentValid = founderPayment.IsBlockPayeeValid(coinbaseTX,nHeight,blockReward);
+
+    if(!founderPaymentValid)
+		return error("Founder payment of %d is not found at block height %d\n",founderAmt / COIN,nHeight);
+
+    return true;
+}
 
 /** Apply the effects of this block (with given index) on the UTXO set represented by coins.
  *  Validity checks that depend on the UTXO set are also done; ConnectBlock()

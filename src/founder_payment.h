@@ -36,6 +36,7 @@ public:
 	void FillFounderPayment(CMutableTransaction& txNew, int nBlockHeight, CAmount blockReward, CTxOut& txoutFounderRet);
 	bool IsBlockPayeeValid(const CTransaction& txNew, const int height, const CAmount blockReward);
 	int getStartBlock() {return this->startBlock;}
+        bool shouldPayFounder(int nHeight) {return nHeight > this->startBlock;}
 private:
 	string founderAddress;
 	int startBlock;
