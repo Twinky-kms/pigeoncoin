@@ -287,25 +287,25 @@ public:
 
         // original difficulty method, every 2016 blocks
         consensus.nPowTargetTimespan = 2016 * 60; // 1.4 days
-        
+
         // second difficulty method, every 360 blocks
         consensus.nPowDifficultyRetargetHeight = 2017; // blockheight to switch to 360 block retarget rules
         consensus.nPowTargetTimespanShort = 360 * 60; //~6 hours
-        
+
         // final difficulty method, zawy lwma
         consensus.zawyLWMAHeight = 2222; // blockheight to switch to LWMA retarget rules
         consensus.powLimitLegacy = uint256S("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
 
         consensus.nPowTargetSpacing = 1 * 60;
         consensus.fPowAllowMinDifficultyBlocks = true;
-        consensus.fPowNoRetargeting = false;
+        consensus.fPowNoRetargeting = true;
         consensus.nRuleChangeActivationThreshold = 1512; // 75% for testchains
         consensus.nMinerConfirmationWindow = 2016; // nPowTargetTimespan / nPowTargetSpacing
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit = 28;
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nStartTime = 1199145601; // January 1, 2008
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nTimeout = 1230767999; // December 31, 2008
-        vector<FounderRewardStrcuture> rewardStructures = {  {500000, 5},
-															 {1000000, 2}
+        vector<FounderRewardStrcuture> rewardStructures = {  {7500, 5},
+															 {10000, 2}
 																		   };
 		consensus.nFounderPayment = FounderPayment(rewardStructures, 3000, "n6yjcgyB6VUJipV9p361QTSCDs3gf8izEh",
 													"nLphepxwA1bNxLDuwB3SLYPXjed6jMwFw4", 4000);
@@ -336,8 +336,8 @@ public:
         vFixedSeeds.clear();
         vSeeds.clear();
 
-        vSeeds.emplace_back("test-seed.x16s.org", false);
-        vSeeds.emplace_back("test-seed.pigeoncoin.org", false);
+        vSeeds.emplace_back("209.126.81.147", false);
+        vSeeds.emplace_back("45.77.238.222", false);
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,112); // from 111
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,193); // from 196
