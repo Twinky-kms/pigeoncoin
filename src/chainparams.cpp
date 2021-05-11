@@ -298,17 +298,15 @@ public:
 
         consensus.nPowTargetSpacing = 1 * 60;
         consensus.fPowAllowMinDifficultyBlocks = true;
-        consensus.fPowNoRetargeting = true;
+        consensus.fPowNoRetargeting = false;
         consensus.nRuleChangeActivationThreshold = 1512; // 75% for testchains
         consensus.nMinerConfirmationWindow = 2016; // nPowTargetTimespan / nPowTargetSpacing
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit = 28;
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nStartTime = 1199145601; // January 1, 2008
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nTimeout = 1230767999; // December 31, 2008
-        vector<FounderRewardStrcuture> rewardStructures = {  {7500, 5},
-															 {10000, 2}
-																		   };
-		consensus.nFounderPayment = FounderPayment(rewardStructures, 3000, "n6yjcgyB6VUJipV9p361QTSCDs3gf8izEh",
-													"nLphepxwA1bNxLDuwB3SLYPXjed6jMwFw4", 4000);
+        vector<FounderRewardStrcuture> rewardStructures = {  {6000, 5} };
+		consensus.nFounderPayment = FounderPayment(rewardStructures, 250, "n6yjcgyB6VUJipV9p361QTSCDs3gf8izEh",
+													"nLphepxwA1bNxLDuwB3SLYPXjed6jMwFw4", 500);
         // The best chain should have at least this much work.
         consensus.nMinimumChainWork = uint256S("0x00");
 
@@ -316,10 +314,10 @@ public:
         consensus.defaultAssumeValid = uint256S("0x00");
 
 
-        pchMessageStart[0] = 0x52;
-        pchMessageStart[1] = 0x56;
-        pchMessageStart[2] = 0x4E;
-        pchMessageStart[3] = 0x54;
+        pchMessageStart[0] = 0x14;
+        pchMessageStart[1] = 0x67;
+        pchMessageStart[2] = 0x4B;
+        pchMessageStart[3] = 0xA3;
         nDefaultPort = 18757;
         nPruneAfterHeight = 1000;
         newFutureWindowBlock = 1;
@@ -350,7 +348,7 @@ public:
         vFixedSeeds = std::vector<SeedSpec6>(pnSeed6_test, pnSeed6_test + ARRAYLEN(pnSeed6_test));
 
         fDefaultConsistencyChecks = false;
-        fRequireStandard = false;
+        fRequireStandard = true;
         fMineBlocksOnDemand = false;
         fMiningRequiresPeers = true;
         newProtocolBlock = 716334;
