@@ -317,7 +317,7 @@ public:
         pchMessageStart[0] = 0x14;
         pchMessageStart[1] = 0x67;
         pchMessageStart[2] = 0x4B;
-        pchMessageStart[3] = 0xA3;
+        pchMessageStart[3] = 0xC3;
         nDefaultPort = 18757;
         nPruneAfterHeight = 1000;
         newFutureWindowBlock = 1;
