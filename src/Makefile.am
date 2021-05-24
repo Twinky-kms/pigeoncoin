@@ -193,6 +193,7 @@ PIGEON_CORE_H = \
   algo/sponge.h \
   algo/gost_streebog.h \
   algo/hashx21s.h \
+  algo/aes_helper.c \
   algo/groestl.c \
   algo/blake.c \
   algo/bmw.c \
