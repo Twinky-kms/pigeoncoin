@@ -309,6 +309,7 @@ crypto_libpigeon_crypto_a_SOURCES = \
   crypto/hmac_sha512.cpp \
   crypto/hmac_sha512.h \
   crypto/ripemd160.cpp \
+  crypto/ripemd160.h \
   crypto/aes_helper.c \
   crypto/sha1.cpp \
   crypto/sha1.h \
