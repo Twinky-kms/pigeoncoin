@@ -428,7 +428,7 @@ public:
         consensus.BIP66Height = 1;
         consensus.DIP0001Height = 45000;
         consensus.DIP0003Height = 45001;
-        consensus.DIP0003EnforcementHeight = 45002;
+        consensus.DIP0003EnforcementHeight = 45202;
         consensus.DIP0003EnforcementHash = uint256S("0x00");
         consensus.nAfterExploitHeight = 0;
         consensus.powLimit = uint256S("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); // ~uint256(0) >> 20
