@@ -408,7 +408,7 @@ public:
     CTestNetParams() {
         strNetworkID = "test";
         consensus.nSubsidyHalvingInterval = 2100000;
-        consensus.nMasternodePaymentsStartBlock = 45010; // not true, but it's ok as long as it's less then nMasternodePaymentsIncreaseBlock
+        consensus.nMasternodePaymentsStartBlock = 45410; // not true, but it's ok as long as it's less then nMasternodePaymentsIncreaseBlock
         consensus.nMasternodePaymentsIncreaseBlock = 45500;
         consensus.nMasternodePaymentsIncreasePeriod = 10;
         consensus.nInstantSendConfirmationsRequired = 2;
